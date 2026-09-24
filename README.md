@@ -1,210 +1,164 @@
-
 # API 1º Semestre ADS
 
-# Documentação - Sprint 1
+# 🧠 Arquitetura — MIA
 
-<div align="center">
-  <!-- Imagem que aparece apenas no Modo Escuro -->
-  <img src="../../../img/logo-mclorem-dark.png#gh-dark-mode-only" alt="logo da McLorem Tecnologia" width="200">
-  
-  <!-- Imagem que aparece apenas no Modo Claro -->
-  <img src="../../../img/logo-mclorem-light.png#gh-light-mode-only" alt="logo da McLorem Tecnologia" width="200">
-  
-  <h2>McLorem Tecnologia</h2>
-</div>
+<!-- >> Este documento complementa o [README.md](../../../README.md) principal. Enquanto o README fala sobre o **produto** (desafio, backlog, equipe), este arquivo documenta a **arquitetura de código** do backend: como as camadas se comunicam e como o fluxo de mensagens acontece na prática. -->
 
-<p align="center">
-  | <a href ="#desafio"> Desafio</a>  |
-  <a href ="#us"> User Stories</a>  |   
-  <a href ="#dor">DoR</a>  |
-  <a href ="#dod">DoD</a>  |
-  <a href ="#equipe"> Equipe</a> |
-</p>
-
-> Status da Sprint: Em Desenvolvimento
-
-## 🏅 Desafio <a id="desafio"></a>
-
-Desenvolver a base do Assistente de Análise de Dados integrado ao Telegram, permitindo que gestores extraiam insights de negócios através de linguagem natural. O desafio central consistiu em processar dados diretamente de planilhas CSV locais (sem persistência de dados) utilizando lógica algorítmica em Python para estruturar o Planejamento de Produção. Foi necessário criar algoritmos capazes de cruzar o histórico de vendas com variáveis externas (como temperatura e dias da semana) para prever com exatidão quais e quantos produtos devem ser produzidos, visando a redução de desperdícios de tempo e insumos. Toda a inteligência e processamento foram projetados para operar de forma autônoma, atendendo à restrição rigorosa de não utilizar APIs externas de terceiros.
-
-## 📋 User Stories <a id="us"></a>
-
-<table>
-  <tbody>
-    <tr>
-      <td><b>Capacidade estimada da Equipe por Sprint:</b></td>
-      <td>55 Story Points</td>
-    </tr>
-    <tr>
-      <td><b><span style="color: #2e8b57;">Meta da Sprint:</span></b></td>
-      <td>User Stories de rank 1 e rank 2 (total de <i>21 Story Points</i>)</td>
-    </tr>
-    <tr>
-      <td><b>Previsão da Sprint</b> (<i>extras, sem compromisso de entrega</i>):</td>
-      <td>User Story de rank 3 e rank 4 (<i>34 Story Points</i>)</td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center;">Rank</th>
-      <th style="text-align: center;">Prioridade</th>
-      <th style="text-align: left;">User Story</th>
-      <th style="text-align: center;">Story Points</th>
-      <th style="text-align: center;">Sprint</th>
-      <th style="text-align: center;">Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center;"><b><span style="color: #2e8b57;">1</span></b></td>
-      <td style="text-align: center;"><b><span style="color: #2e8b57;">Alta</span></b></td>
-      <td style="text-align: left;"><b><span style="color: #2e8b57;">Eu, como líder, quero saber quais produtos precisam ser produzidos, a fim de reduzir o desperdício de tempo e produto.</span></b></td>
-      <td style="text-align: center;"><b><span style="color: #2e8b57;">13</span></b></td>
-      <td style="text-align: center;"><b><span style="color: #2e8b57;">1</span></b></td>
-      <td style="text-align: center;">❌</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><b><span style="color: #2e8b57;">2</span></b></td>
-      <td style="text-align: center;"><b><span style="color: #2e8b57;">Alta</span></b></td>
-      <td style="text-align: left;"><b><span style="color: #2e8b57;">Eu, como líder, quero saber quantos produtos precisam ser produzidos, a fim de reduzir o desperdício de tempo e produto.</span></b></td>
-      <td style="text-align: center;"><b><span style="color: #2e8b57;">8</span></b></td>
-      <td style="text-align: center;"><b><span style="color: #2e8b57;">1</span></b></td>
-      <td style="text-align: center;">❌</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;">3</td>
-      <td style="text-align: center;">Média</td>
-      <td style="text-align: left;">Eu, como gerente, quero saber o que foi produzido no dia X pelo setor Y, a fim de verificar a produtividade do setor Y.</td>
-      <td style="text-align: center;">13</td>
-      <td style="text-align: center;">1</td>
-      <td style="text-align: center;">❌</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;">4</td>
-      <td style="text-align: center;">Média</td>
-      <td style="text-align: left;">Eu, como gerente, quero saber o que deveria ter sido produzido no dia X pelo setor Y, a fim de comparar a meta com a produção real e identificar gargalos.</td>
-      <td style="text-align: center;">21</td>
-      <td style="text-align: center;">1</td>
-      <td style="text-align: center;">❌</td>
-    </tr>
-  </tbody>
-</table>
+## Sumário
+- [Visão geral das camadas](#visao-geral)
+- [1. Utilitários Globais (`utils.py`)](#utils)
+- [2. Motor de Dados: Procedures (`procedures/`)](#procedures)
+- [3. Ferramentas da IA: Tools (`tools/`)](#tools)
+- [4. Agentes de IA e Fluxo de Mensagens](#agentes)
+<!-- - [Nota de manutenção](#manutencao) -->
 
 ---
 
-## 🏅 DoR - Definition of Ready <a id="dor"></a>
+## Visão geral das camadas <a id="visao-geral"></a>
 
-| Critério | Descrição |
-| :--- | :--- |
-| **Clareza e Usuário** | O objetivo das User Stories está claramente definido e o usuário da funcionalidade (Líder) está identificado. |
-| **Fontes de Dados** | Os produtos estão bem definidos no arquivo `produtos_mercado.csv`. Serão utilizados os arquivos: Regras, Vendas e Descartes do supermercado por mês e ano. |
-| **Regras de Negócio** | O método de cálculo está definido, baseando-se nas vendas anteriores, na temperatura do dia e no dia do mês. |
-| **Apresentação Visual** | Está definido como a quantidade recomendada e a lista de produtos serão apresentadas ao líder. |
-| **Critérios e Dependências** | Todos os critérios de aceite estão definidos e as dependências necessárias para o desenvolvimento foram identificadas. |
+O backend separa estritamente duas responsabilidades:
 
-## 🏅 DoD - Definition of Done <a id="dod"></a>
+- **Procedures** → motor matemático e de dados, com Pandas. Não sabe nada sobre IA.
+- **Tools** → interfaces semânticas formatadas para o DSPy, que chamam as Procedures por baixo.
 
-| Critério | Descrição |
-| :--- | :--- |
-| **Identificação e Cálculo** | O sistema identifica corretamente quais produtos precisam ser produzidos e calcula a quantidade recomendada para cada um deles. |
-| **Fatores de Demanda** | O cálculo utiliza ativamente os dados do histórico de vendas e considera os fatores de demanda definidos (temperatura, feriados e finais de semana). |
-| **Apresentação de Dados** | O sistema apresenta de forma clara, ao líder, o nome do produto e a quantidade recomendada para produção. |
-| **Precisão e Regras** | Os cálculos foram validados com dados de referência e produtos sem necessidade de produção não são indevidamente recomendados. |
-| **Qualidade (Testes)** | A funcionalidade foi testada com diferentes cenários de demanda e não apresenta erros que impeçam o seu funcionamento. |
-| **Aprovação Final** | Todos os critérios de aceite foram atendidos e o líder ou responsável pelo projeto validou o resultado final da Sprint. |
-
-## 🎓 Equipe <a id="equipe"></a>
-
-<div align="center">
-  <table>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/hcastrosilva96">
-          <img src="https://github.com/hcastrosilva96.png" width="115px;" style="border-radius: 50%;" alt="Foto do Henrique de Castro"/><br>
-          <sub><b>Henrique de Castro</b></sub>
-        </a><br>
-        Product Owner<br>
-        <a href="https://www.linkedin.com/in/henrique-castro-silva-6568a012b/">LinkedIn</a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/FelipeMoraisOC">
-          <img src="https://github.com/FelipeMoraisOC.png" width="115px;" style="border-radius: 50%;" alt="Foto do Felipe Morais"/><br>
-          <sub><b>Felipe Morais</b></sub>
-        </a><br>
-        Scrum Master<br>
-        <a href="https://www.linkedin.com/in/felipemoraisoc/">LinkedIn</a>
-      </td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/mirelacristina">
-          <img src="https://github.com/mirelacristina.png" width="100px;" style="border-radius: 50%;" alt="Foto da Mirela Cristina"/><br>
-          <sub><b>Mirela Cristina</b></sub>
-        </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
-      </td>
-      <td align="center">
-        <a href="https://github.com/eduardogranja">
-          <img src="https://github.com/eduardogranja.png" width="100px;" style="border-radius: 50%;" alt="Foto do Eduardo Granja"/><br>
-          <sub><b>Eduardo Granja</b></sub>
-        </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
-      </td>
-      <td align="center">
-        <a href="https://github.com/IanVRV">
-          <img src="https://github.com/IanVRV.png" width="100px;" style="border-radius: 50%;" alt="Foto do Ian Victor"/><br>
-          <sub><b>Ian Victor</b></sub>
-        </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/ian-victor-ribeiro-vieira-3147121ba/">LinkedIn</a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/mvlsouza">
-          <img src="https://github.com/mvlsouza.png" width="100px;" style="border-radius: 50%;" alt="Foto do Marcus Vinicius"/><br>
-          <sub><b>Marcus Vinicius</b></sub>
-        </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/mvlsouza">LinkedIn</a>
-      </td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-      <td align="center">
-        <a href="https://github.com/leandrotc013-lab">
-          <img src="https://github.com/leandrotc013-lab.png" width="100px;" style="border-radius: 50%;" alt="Foto do Leandro"/><br>
-          <sub><b>Leandro Silva</b></sub>
-        </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
-      </td>
-      <td align="center">
-        <a href="https://github.com/ag0ulart-dev">
-          <img src="https://github.com/ag0ulart-dev.png" width="100px;" style="border-radius: 50%;" alt="Foto do Adham Goulart"/><br>
-          <sub><b>Adham Goulart</b></sub>
-        </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/adham-goulart-4a7320394/">LinkedIn</a>
-      </td>
-      <td align="center">
-        <a href="https://github.com/MATHEUSORTEGA">
-          <img src="https://github.com/MATHEUSORTEGA.png" width="100px;" style="border-radius: 50%;" alt="Foto do Matheus Correia"/><br>
-          <sub><b>Matheus Correia</b></sub>
-        </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
-      </td>
-    </tr>
-  </table>
-</div>
+```mermaid
+flowchart LR
+    A[Telegram] --> B[bot/telegram_bot.py]
+    B --> C[ia/message.py]
+    C --> D[Agentes DSPy]
+    D -->|ReAct escolhe uma tool| E[ia/tools/*]
+    E -->|chama| F[ia/procedures/*]
+    F -->|lê| G[(CSVs em dados/)]
+```
 
 ---
 
-*Desenvolvido com dedicação por estudantes da Fatec para o projeto de API do 1º Semestre de ADS - 2026-2.*
+## 1. Utilitários Globais (`ia/tools/utils.py`) <a id="utils"></a>
+
+Funções de apoio usadas pelas *tools* antes de acionar as *procedures*.
+
+| Função | Assinatura | O que faz |
+| --- | --- | --- |
+| `dspy_tool` | `dspy_tool(func)` | Decorador que registra a função na lista `TOOLS_DISPONIVEIS`, usada pelo agente `ReAct` para saber quais ferramentas existem. |
+| `converter_data_relativa` | `converter_data_relativa(data_alvo: str) -> str` | Intercepta gírias de data (`"hoje"`, `"hj"`, `"amanhã"`, `"amanha"`, `"ontem"`) e converte para `DD/MM/AAAA`. Se já vier uma data válida, devolve o texto intacto. |
+| `normalizar_setor` | `normalizar_setor(setor_informado: str) -> str \| None` | Corretor ortográfico e mapeador de apelidos de setor (ex: `"cozinha"` → `"Cozinha/Rotisseria"`, `"acougue"` → `"Açougue"`). Devolve `None` para entradas vazias/`"null"`/`"none"`. |
+| `dias_ate_pagamento` | `dias_ate_pagamento(valor: str) -> int` | Calcula a distância em dias até o ciclo de pagamento mais próximo (dia 20 ou 5º dia útil do mês), antecipando o pagamento se cair em fim de semana. Retorna `0` se a data informada já for dia de pagamento. |
+| `classificar_dia` | `classificar_dia(data: str) -> int` | Devolve `1` (dia bom) ou `0` (dia ruim), com base em: é dia de pagamento? é sexta/sábado/domingo? é feriado (via `holidays`, calendário `BR`/`SP`)? |
+
+---
+
+## 2. Motor de Dados: Procedures (`ia/procedures/`) <a id="procedures"></a>
+
+Todo acesso é feito através do módulo agregador `procedures.py`, que expõe cada arquivo como um "apelido":
+
+```python
+import ia.procedures.procedures as procedures
+
+procedures.vendas.buscar_por_nome_produto("coxinha")
+procedures.produtos.buscar_por_setor("Padaria")
+procedures.descarte.buscar_por_data("20/09/2026")
+```
+
+### `vendas_procedures.py` (módulo `vendas`)
+
+| Função | Assinatura | O que faz |
+| --- | --- | --- |
+| `todas_as_vendas` | `() -> pd.DataFrame` | Devolve o *dataframe* bruto com o histórico de vendas (agosto + setembro/2026 concatenados). |
+| `dias_ate_pagamento` | `(valor: str) -> int` | Calcula a distância em dias até o ciclo de pagamento mais próximo (dia 20 ou 5º dia útil do mês), antecipando o pagamento se cair em fim de semana. Retorna `0` se a própria data for dia de pagamento. |
+| `dataframe_vendas_similares` | `(data: str, filtro_dia: int) -> pd.DataFrame` | Filtra o histórico completo, devolvendo apenas os dias com o mesmo perfil (`filtro_dia`) da data informada. |
+| `media_vendas_produtos` | `(vendas: pd.DataFrame, setor: str = None) -> list[str]` | Agrupa por produto, calcula a média de vendas e arredonda **para cima** (`math.ceil`). Devolve algo como `['Pão Francês: 150']`. Se `setor` for informado, filtra antes pelos produtos daquele setor. |
+
+### `producao_procedures.py` (módulo `producao`)
+
+| Função | Assinatura | O que faz |
+| --- | --- | --- |
+| `calcular_producao_setor_data` | `(data: str, setor: str) -> dict \| None` | Cruza **Vendas** e **Descarte** de uma data/setor específicos e soma `Produção = Vendas + Descarte` por produto. Devolve `None` se o setor não existir, ou um dicionário `{produto: {"vendas": int, "descarte": int, "producao": int}}` filtrando itens zerados. |
+
+> Também existem `produtos_procedures.py`, `descarte_procedures.py`, `ingredientes_procedures.py` e `regras_procedures.py` no mesmo padrão (busca por nome, por setor, por data), usados como dependência pelos módulos acima.
+
+---
+
+## 3. Ferramentas da IA: Tools (`ia/tools/`) <a id="tools"></a>
+
+Ponte entre as *Procedures* e o DSPy. As docstrings destas funções **são** a documentação que o modelo de linguagem lê para decidir qual ferramenta acionar — por isso a fonte da verdade sobre o comportamento de cada tool é o próprio código, não uma cópia aqui.
+
+### Produção & Previsão (`producao_tool.py`)
+
+| Tool | Assinatura | Foco |
+| --- | --- | --- |
+| `tool_previsao_vendas_por_data` | `(data: str = "hoje", setor: str = None, tipo_pergunta: str = "quanto") -> str` | **Ação e futuro.** O que *deve* ser produzido. |
+| `tool_meta_producao_passada` | `(data: str = "hoje", setor: str = None, tipo_pergunta: str = "quanto") -> str` | **Auditoria e passado.** O que *deveria* ter sido produzido (relatório de meta para gerentes). |
+| `tool_producao_dia_pelo_setor` | `(data: str, setor: str = None) -> str` | **Realizado.** O que *efetivamente* foi produzido, somando vendas + descartes reais (ex: `Coxinha \| Total Produzido: 30 (Vendas: 16, Descarte: 14)`). |
+
+O parâmetro `tipo_pergunta` (`"qual"/"quais"` vs. `"quanto"`) existe nas duas primeiras tools e controla se a resposta lista só os nomes dos produtos ou os nomes com as quantidades.
+
+### Catálogo de Produtos (`produtos_tools.py`)
+
+| Tool | Assinatura | Foco |
+| --- | --- | --- |
+| `listar_todos_produtos` | `() -> str` | Catálogo completo de produtos. |
+| `listar_detalhes_todos_produtos` | `() -> str` | Catálogo completo com Nome, Setor e Tempo de preparo. |
+| `informacoes_produto` | `(nome: str) -> str` | Detalhes de um produto específico. |
+| `informacoes_produto_setor` | `(setor: str) -> str` | Produtos de um setor específico. |
+| `produto_por_tempo_preparo` | `(tempo: str) -> str` | Produtos filtrados por tempo de preparo. |
+
+---
+
+## 4. Agentes de IA e Fluxo de Mensagens <a id="agentes"></a>
+
+### 4.1. Receção e Orquestração
+
+- **`bot/telegram_bot.py > iniciar_bot(bot_key)`** — conecta à API do Telegram, responde `/start` com a apresentação da MIA, ignora formatos não suportados (`audio`, `photo`, `voice`, `video`, etc.) e, para mensagens de texto, exibe "⏳ Processando sua solicitação..." enquanto aciona a IA.
+- **`ia/message.py > processar_mensagem(texto_usuario: str) -> str`** — recebe o texto bruto, orquestra a chamada aos agentes DSPy dentro de um `try/except` e trata falhas do modelo (`AdapterParseError`) ou erros gerais de forma amigável para o usuário.
+
+### 4.2. Os 4 Agentes Especialistas (`ia/agentes.py`)
+
+```mermaid
+flowchart TD
+    U[Mensagem do usuário] --> C{Classificador de Intenção}
+    C -->|SAUDACAO| S[Agente Social]
+    C -->|INVALIDO| I[Resposta fixa de escopo]
+    C -->|TRABALHO| T[Agente Trabalhador - ReAct]
+    T -->|aciona uma tool| TOOLS[ia/tools/*]
+    TOOLS --> F[Formatador de Resposta]
+    S --> OUT[Resposta final]
+    I --> OUT
+    F --> OUT
+```
+
+1. **Classificador de Intenção** (`dspy.Predict`) — "porteiro" do sistema. Classifica a mensagem em `SAUDACAO`, `TRABALHO` ou `INVALIDO`, evitando acionar ferramentas complexas sem necessidade.
+2. **Agente Social** (`dspy.Predict`) — acionado só na rota `SAUDACAO`. Responde como MIA de forma curta e simpática.
+3. **Agente Trabalhador** (`dspy.ReAct`) — o mais complexo. Recebe a lista `TOOLS_DISPONIVEIS`, raciocina sobre qual ferramenta acionar, extrai os parâmetros (data, setor, tipo de pergunta) e devolve o dado bruto (`dado_bruto_da_ferramenta`).
+4. **Formatador de Resposta** (`dspy.Predict`) — transforma o dado bruto retornado pela tool em texto natural, seguindo regras fixas de UX Writing: nunca começa com saudação, usa `-` para listas (nunca `*`), e responde só com base no dado bruto recebido.
+
+### 4.3. Fluxo de vida da mensagem — exemplo prático
+
+```mermaid
+sequenceDiagram
+    participant U as Usuário (Telegram)
+    participant Bot as telegram_bot.py
+    participant Msg as message.py
+    participant Cls as Classificador
+    participant Trab as Agente Trabalhador
+    participant Tool as tool_previsao_vendas_por_data
+    participant Fmt as Formatador
+
+    U->>Bot: "O que devo produzir amanhã na Padaria?"
+    Bot->>Msg: processar_mensagem(texto)
+    Msg->>Cls: classifica a intenção
+    Cls-->>Msg: TRABALHO
+    Msg->>Trab: aciona o ReAct
+    Trab->>Tool: tool_previsao_vendas_por_data(data="amanhã", setor="Padaria")
+    Tool-->>Trab: dado bruto (produtos + quantidades)
+    Trab-->>Msg: dado_bruto_da_ferramenta
+    Msg->>Fmt: formata a resposta final
+    Fmt-->>Msg: resposta_final
+    Msg-->>Bot: texto pronto
+    Bot-->>U: edita a mensagem "Processando..." com a resposta
+```
+
+---
+
+<!-- ## Nota de manutenção <a id="manutencao"></a>
+
+As tabelas de assinaturas acima existem só para dar uma visão geral rápida sem precisar abrir cada arquivo. **A fonte da verdade é sempre o código e a docstring de cada função** — se você adicionar um parâmetro ou mudar o nome de uma função, atualize a tabela correspondente na mesma PR (isso já está previsto no critério "Documentação Atualizada" do [DoD do projeto](../../README.md#dod)). -->
