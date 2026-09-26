@@ -2,11 +2,12 @@
 # ex:
 #import procedures as proc
 
-import vendas_procedures as vendas
-import regras_procedures as regras
-import produtos_procedures as produtos  
-import ingredientes_procedures as ingredientes
-import descarte_procedures as descarte
+import ia.procedures.vendas_procedures as vendas
+import ia.procedures.regras_procedures as regras
+import ia.procedures.produtos_procedures as produtos  
+import ia.procedures.ingredientes_procedures as ingredientes
+import ia.procedures.descarte_procedures as descarte
+import ia.procedures.producao_procedures as producao
 
 #como acessar?
 # main.py ou telegram_bot.py ou tools/qualquer_arquivo_dspy.py
