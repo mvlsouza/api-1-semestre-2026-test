@@ -68,7 +68,7 @@ def tool_previsao_vendas_por_data(data: str = "hoje", setor: str = "", tipo_perg
 @dspy_tool
 def tool_meta_producao_passada(data: str = "hoje", setor: str = "", tipo_pergunta: str = "quanto") -> str:
     # US-04
-    # US-04: Eu, como gerente, quero saber o que deveria ter sido produzido no dia X pelo setor Y, a fim de comparar a meta com a produção real e identificar gargalos.
+    # US-04: Eu, como gerente, quero saber o que deveria ter sido produzido no dia X pelo setor Y, a fim de consultar a meta ideal.
     """Use esta ferramenta EXCLUSIVAMENTE para AUDITORIA e METAS PASSADAS (foco em cobrança ou verificação).
     Acione-a para responder perguntas como: "O que DEVERIA ter sido produzido ontem?", "Qual era a meta de 3 dias atrás?" ou "Quais produtos a equipe deveria ter feito há 2 dias?".
     

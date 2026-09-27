@@ -37,11 +37,11 @@ def dataframe_vendas_similares(data: str, filtro_dia: int) -> pd.DataFrame:
 
 def media_vendas_produtos(vendas: pd.DataFrame, setor: str = None):
     """
-    Calcula a média de vendas de cada produto e arredonda o resultado
+    Calcula a média de vendas de cada produto, incluir a margem de 30% e arredonda o resultado
     para cima.
 
     Args:
-        vendas (list): Lista de vendas no formato de registros
+        vendas (pd.DataFrame): Lista de vendas no formato de registros
             de um DataFrame do pandas.
         setor (str, opcional): Setor utilizado para filtrar os produtos.
             Se não for informado, calcula a média de todos os produtos.
@@ -73,12 +73,8 @@ def media_vendas_produtos(vendas: pd.DataFrame, setor: str = None):
     resultado = []
 
     for produto, media in medias.items():
-        media_arredondada = math.ceil(media)
-
         resultado.append(
-            f"{produto}: {math.ceil(media_arredondada + media_arredondada * 0.3)}"
+            f"{produto}: {math.ceil(media * 1.3)}"
         )
 
-    return resultado
-
-   
+    return resultado  

@@ -1,4 +1,4 @@
-# Guia de instalação do projeto
+# 📕 Manual do Instalação - MIA (Assistente de Análise de Dados)
 
 ## Descrição
 
@@ -8,7 +8,7 @@ Este repositório contém a aplicação desenvolvida para o 1º semestre do curs
 
 Git instalado na máquina - [Download](https://git-scm.com/downloads)
 
-Python 3.9+ instalado - [Download](https://www.python.org/downloads/)
+Python 3.12+ instalado - [Download](https://www.python.org/downloads/)
 
 Ollama instalado - [Download](https://ollama.com/download)
 
@@ -23,14 +23,14 @@ git clone https://github.com/McLorem-Tecnologia/api-1-semestre-2026.git
 
 ## Inicializando a Aplicação
 
-#### - Inicialize o Serviço da IA no localhost: 
-Certifique-se de que o aplicativo do Ollama está aberto. Em seguida, baixe os modelos necessários no terminal:
+### - Inicialize o Serviço da IA no localhost: 
+Certifique-se de que o aplicativo do Ollama está aberto. Em seguida, baixe o modelo necessário no terminal:
 ```bash
 ollama pull gemma4:e2b
 ```
 <!-- && ollama pull gemma3:1b -->
 
-#### Instale as dependências
+### Instale as dependências
 
 Após clonar o repositório, siga os passos abaixo para configurar o ambiente e iniciar a aplicação:
 
@@ -59,7 +59,7 @@ Conteúdo base do arquivo `.env.example`:
 TELEGRAM_BOT_KEY=seu_token_gerado_no_botfather_aqui
 ```
 
-#### Inicie os serviços.
+### Inicie a aplicação.
 
 Servidor Backend e Integração Telegram:
 

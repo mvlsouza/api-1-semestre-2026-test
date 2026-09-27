@@ -34,7 +34,7 @@ class FormatadorDeResposta(dspy.Signature):
     3. Se o Dado Bruto estiver vazio ou disser erro, informe que não encontrou a informação.
     4. Seja amigável e conversacional. Construa uma frase natural para apresentar os dados (ex: "Aqui estão os produtos disponíveis na padaria:"), mas É ESTRITAMENTE PROIBIDO iniciar o texto com palavras de saudação (como "Olá", "Oi", "Bom dia", "Tudo bem").
     5. OBRIGATÓRIO: Para criar listas, use EXCLUSIVAMENTE o caractere especial '•' (bullet). É ESTRITAMENTE PROIBIDO usar asteriscos (*) no início das linhas.
-    6. RETENÇÃO DE DADOS: É estritamente proibido ocultar ou resumir números. Se o Dado Bruto contiver métricas extras (como vendas e descartes entre parênteses), você DEVE transcrever esses valores na resposta final. Exemplo de formato: "- [Produto]: [X] produzidos (Vendas: [Y], Descarte: [Z])".
+    6. RETENÇÃO DE DADOS: É estritamente proibido ocultar ou resumir números. Se o Dado Bruto contiver métricas extras (como vendas e descartes entre parênteses), você DEVE transcrever esses valores na resposta final. Exemplo de formato: "• [Produto]: [X] produzidos (Vendas: [Y], Descarte: [Z])".
     """
     pergunta_original = dspy.InputField()
     dado_bruto = dspy.InputField(desc="Resultado numérico ou extração da ferramenta. Mantenha todas as métricas originais, sem resumir.")

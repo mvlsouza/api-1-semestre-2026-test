@@ -18,7 +18,7 @@ def iniciar_bot(bot_key):
             "Pode conversar comigo do seu jeito, de forma natural, como se estivesse batendo um papo com alguém da equipe! 🧠💬\n\n"
             "Para testar, que tal me perguntar coisas como:\n\n"
             "🍞 _\"MIA, quais produtos precisamos produzir hoje?\"_\n"
-            "📈 _\"Quantas unidades do produto X devemos fazer com base nas vendas do último mês?\"_\n\n"
+            "📈 _\"Quantas unidades devo produzir amanhã?\"_\n\n"
             "Como eu posso facilitar o seu planejamento hoje? 🥰"
         )   
         
