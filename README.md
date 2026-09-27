@@ -30,7 +30,7 @@
 > 
 > **Relatório de Testes:** [Link](docs/processo/sprints/sprint-1/testes/Relatorio%20de%20Testes%20-%20Sprint%201.md)
 > 
-> **Documentação:** [Pasta Principal](docs/cliente) · [Arquitetura](docs/cliente/tecnico/Arquitetura.md) · [Manual do Usuário](docs/cliente/usuário/Manual%20do%20Usuário.md) · [Estratégia de Branch](docs/processo/Estrategia%20de%20Branch.md) · [Padrão de Commits](docs/processo/Padr%C3%B5es%20de%20Commits.md)
+> **Documentação:** [Pasta Principal](docs/cliente) · [Arquitetura](docs/cliente/tecnico/Arquitetura.md) · [Manual do Usuário](docs/cliente/usuário/Manual%20do%20Usuário.md) · [Estratégia de Branch](docs/processo/Estratégia%20de%20Branch.md) · [Padrão de Commits](docs/processo/Padr%C3%B5es%20de%20Commits.md)
 <!--
 > **Vídeo do Projeto:** [Youtube](https://youtu.be/)
 -->
