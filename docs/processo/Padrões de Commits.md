@@ -27,4 +27,4 @@ Os commits seguem uma adaptação do [Conventional Commits](https://www.conventi
 - **refactor (MT-88)**: Refatora lógica de inicialização da API
 - **docs (MT-12)**: Documenta o cronograma de sprints no README.md
 - **style (MT-09)**: Remove espaços em branco desnecessários no utils.py
-- **chore (MT-05)**: Adiciona venv/ ao .gitignore
+- **chore (MT-05)**: Adiciona venv/ ao .gitignore.
