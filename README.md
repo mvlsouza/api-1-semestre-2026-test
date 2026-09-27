@@ -30,9 +30,7 @@
 > 
 > **Relatório de Testes:** [Link](docs/processo/sprints/sprint-1/testes/Relatorio%20de%20Testes%20-%20Sprint%201.md)
 > 
-> **Pasta de Documentação:** [Link](docs/cliente)
->
-> Documentação: [Arquitetura](docs/cliente/tecnico/Arquitetura.md) · [Manual do Usuário](docs/cliente/usuário/Manual%20do%20Usuário.md) · [Estratégia de Branch](docs/processo/Estrategia%20de%20Branch.md) · [Padrão de Commits](docs/processo/Padr%C3%B5es%20de%20Commits.md)
+> **Documentação:** [Pasta Principal](docs/cliente) · [Arquitetura](docs/cliente/tecnico/Arquitetura.md) · [Manual do Usuário](docs/cliente/usuário/Manual%20do%20Usuário.md) · [Estratégia de Branch](docs/processo/Estrategia%20de%20Branch.md) · [Padrão de Commits](docs/processo/Padr%C3%B5es%20de%20Commits.md)
 <!--
 > **Vídeo do Projeto:** [Youtube](https://youtu.be/)
 -->
@@ -77,12 +75,6 @@ O diferencial da solução é a fricção zero com o usuário. A plataforma atua
 |   **10**  |    **Baixa**   | Eu, como líder, quero saber quanta matéria-prima eu preciso deixar preparada para o dia seguinte, a fim de otimizar o tempo e reduzir o desperdício de matéria-prima. |      *A estimar*       |    3   |    ⏳   |
 |  **11**  |    **Baixa**   | Eu, como líder, quero saber quais matérias-primas estão disponíveis para transferir a outros setores, a fim de reaproveitar recursos parados e evitar compras desnecessárias. |      *A estimar*       |    3   |    ⏳   |
 |  **12**  |    **Baixa**   | Eu, como gerente, quero saber por que o produto X está sendo transferido de setor, a fim de identificar falhas no planejamento original da produção. |      *A estimar*       |    3   |    ⏳   |
-
-> [!NOTE]
-> **Legenda de Status:**
-> * ✅ Concluída
-> * 🛠️ Em desenvolvimento
-> * ⏳ Planejada
 
 ---
 
