@@ -1,5 +1,5 @@
-from ia import procedures
-from ia.tools import dspy_tool
+from ia.procedures import procedures
+from ia.tools.utils import dspy_tool
 
 @dspy_tool
 def listar_todos_produtos() -> str:

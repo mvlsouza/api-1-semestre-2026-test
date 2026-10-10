@@ -1,4 +1,4 @@
-# 🧠 Arquitetura — MIA — Assistente de Análise de Dados
+# 🧠 Arquitetura — MIA
 
 ## Sumário
 - [Visão geral das camadas](#visao-geral)
@@ -31,15 +31,15 @@ flowchart LR
 
 ## 1. Utilitários Globais (`ia/tools/utils.py`) <a id="utils"></a>
 
-Funções de apoio NLP e cálculos de tempo usadas pelas *tools* antes de acionar as *procedures*.
+Funções de apoio usadas pelas *tools* antes de acionar as *procedures*.
 
 | Função | Assinatura | O que faz |
 | --- | --- | --- |
 | `dspy_tool` | `dspy_tool(func)` | Decorador que registra a função na lista `TOOLS_DISPONIVEIS`, usada pelo agente `ReAct` para saber quais ferramentas existem. |
-| `converter_data_relativa` | `converter_data_relativa(data_alvo: str) -> str` | Motor de NLP de datas. Intercepta palavras relativas (*hoje, amanhã*), formatos crus (*20/09, dia 04*) e expressões matemáticas (*3 dias atrás*), convertendo tudo de forma inteligente para DD/MM/AAAA. Se o mês for omitido, assume o mês corrente. |
-| `normalizar_setor` | `normalizar_setor(setor: str) -> str \| None` | Corretor ortográfico e mapeador de apelidos de setor (ex: `"cozinha"` → `"Cozinha/Rotisseria"`, `"sushi"` → `"Peixaria"`). Devolve `None` para entradas vazias. |
-| `eh_feriado_sjc` | `eh_feriado_sjc(data: datetime) -> bool` | Motor de calendário local. Retorna `True` se a data for um feriado fixo (Nacionais, Estaduais ou Municipais de São José dos Campos) ou feriado móvel (Carnaval, etc.). **Não utiliza bibliotecas externas**. |
-| `classificar_dia` | `classificar_dia(data: str) -> int` | Devolve `1` (dia de pico/bom) ou `0` (dia comum). Possui o **Motor CLT** integrado: varre o mês em tempo real para calcular o 5º dia útil exato (Salário) e o dia 20 validado (Vale), além de cruzar com finais de semana e feriados locais. |
+| `converter_data_relativa` | `converter_data_relativa(data_alvo: str) -> str` | Converte hoje/hj, amanhã/amanha, ontem, anteontem e expressões como 3 dias atrás, há 2 dias, daqui a 5 dias, em 4 dias para DD/MM/AAAA. Entrada vazia devolve ""; qualquer outro texto (inclusive uma data já formatada) é devolvido sem alteração. |
+| `normalizar_setor` | `normalizar_setor(setor: str) -> str \| None` | Corretor ortográfico e mapeador de apelidos de setor (ex: `"cozinha"` → `"Cozinha/Rotisseria"`, `"acougue"` → `"Açougue"`). Devolve `None` para entradas vazias/`"null"`/`"none"`. |
+| `dias_ate_pagamento` | `dias_ate_pagamento(valor: str) -> int` | Retorna 0 se a data for dia de pagamento, um valor negativo com os dias até o próximo pagamento, um valor positivo com os dias desde o último, ou -999 se não houver pagamento a até 19 dias. Pagamentos: dia 20 (antecipado para sexta se cair no fim de semana) e 5º dia útil (sábado conta como útil; feriados BR/SP não contam). |
+| `classificar_dia` | `classificar_dia(data: str) -> int` | Devolve `1` (dia bom) ou `0` (dia ruim), com base em: é dia de pagamento? é sexta/sábado/domingo? é feriado (via `holidays`, calendário `BR`/`SP`)? |
 
 ---
 
