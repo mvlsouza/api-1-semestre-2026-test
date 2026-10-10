@@ -1,7 +1,6 @@
 # venv
 venv/
 add_lib.py
-backup/
 
 # enviroment 
 .env

@@ -1,11 +1,16 @@
+from pathlib import Path
 import pandas as pd
-from paths import DESCARTE_DIR 
 
-arquivos = sorted(DESCARTE_DIR.glob("descarte_*.csv"))
-tabela = pd.concat([pd.read_csv(a, sep=";", encoding="utf-8-sig") for a in arquivos], ignore_index=True)
+
+CAMINHO_ARQUIVO = (
+    Path(__file__).resolve().parents[3]
+    / "dados"
+    / "descarte_supermercado_setembro_2026.csv"
+)
+
 
 def carregar_dados():
-    return tabela
+    return pd.read_csv(CAMINHO_ARQUIVO, sep=";")
 #lê a planilha do csv
 
 
