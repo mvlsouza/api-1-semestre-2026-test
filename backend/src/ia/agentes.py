@@ -1,17 +1,19 @@
 import dspy
-from ia.tools import TOOLS_DISPONIVEIS
+from ia.tools import obter_ferramentas_por_categoria
 
 class ClassificadorDeIntencao(dspy.Signature):
     """Você é um roteador lógico do sistema da MIA, a assistente virtual amigavel da produçao do supermercado.
-    Sua ÚNICA função é categorizar a mensagem do usuário em uma de três rotas.
+    Sua ÚNICA função é categorizar a mensagem do usuário em rotas específicas.
     
     ROTAS VÁLIDAS:
     - SAUDACAO: Mensagens de oi, olá, tchau, bom dia, agradecimentos (obrigado, valeu), qual seu nome.
-    - TRABALHO: Assuntos do escopo (produção, estoque, planilhas, lucros, desperdício, cálculos, informações sobre produto).
-    - INVALIDO: Qualquer outro assunto que não se encaixe nas duas acima.
+    - PRODUCAO: Assuntos sobre quantidade a produzir, metas, descartes e fabricação.
+    - PRODUTOS: Assuntos sobre ingredientes, estoque de produtos, receitas ou categorias dos produtos.
+    - VENDAS: Assuntos sobre lucros, preços, histórico de vendas e faturamento.
+    - INVALIDO: Qualquer outro assunto que não se encaixe nas acima.
     """
     pergunta = dspy.InputField(desc="Mensagem do usuário.")
-    categoria = dspy.OutputField(desc="Responda ESTRITAMENTE com 'SAUDACAO', 'TRABALHO' ou 'INVALIDO'.")
+    categoria = dspy.OutputField(desc="Responda ESTRITAMENTE com 'SAUDACAO', 'PRODUCAO', 'PRODUTOS', 'VENDAS' ou 'INVALIDO'.")
 
 class RespostaSocial(dspy.Signature):
     """Você é a MIA, a assistente virtual amigável da produçao do supermercado.
@@ -45,7 +47,19 @@ agente_classificador = dspy.Predict(ClassificadorDeIntencao)
 agente_social = dspy.Predict(RespostaSocial)
 agente_comunicador = dspy.Predict(FormatadorDeResposta)
 
-agente_trabalhador = dspy.ReAct(
-    "pergunta: str -> dado_bruto_da_ferramenta: str", 
-    tools=TOOLS_DISPONIVEIS
-)
+class TrabalhadorEspecialista(dspy.Module):
+    def __init__(self, categoria: str):
+        super().__init__()
+        ferramentas_da_categoria = obter_ferramentas_por_categoria(categoria)
+        
+        nomes_ferramentas = [f.name for f in ferramentas_da_categoria]
+        print(f"\n[DEBUG ROTEAMENTO] Categoria escolhida: {categoria}")
+        print(f"[DEBUG ROTEAMENTO] Ferramentas ativas: {nomes_ferramentas}\n")
+        
+        self.agente_react = dspy.ReAct(
+            "pergunta: str -> dado_bruto_da_ferramenta: str", 
+            tools=ferramentas_da_categoria
+        )
+        
+    def forward(self, pergunta):
+        return self.agente_react(pergunta=pergunta)

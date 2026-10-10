@@ -32,7 +32,7 @@ def _formatar_lista_produtos(resultado: list, tipo_pergunta: str) -> str:
             
     return texto
 
-@dspy_tool
+@dspy_tool('PRODUCAO')
 def tool_previsao_vendas_por_data(data: str = "hoje", setor: str = "", tipo_pergunta: str = "quanto") -> str:
     # US-01 e US-02
     # US-01: Eu, como líder, quero saber QUAIS produtos precisam ser produzidos, a fim de reduzir o desperdício de tempo e produto.
@@ -74,8 +74,7 @@ def tool_previsao_vendas_por_data(data: str = "hoje", setor: str = "", tipo_perg
         print(f"[ERRO - tool_previsao_vendas_por_data] Falha: {e}")
         return "Ocorreu um erro técnico ao cruzar os dados. Informe ao usuário que não foi possível projetar a produção neste momento."
 
-
-@dspy_tool
+@dspy_tool('PRODUCAO')
 def tool_meta_producao_passada(data: str = "hoje", setor: str = "", tipo_pergunta: str = "quanto") -> str:
     # US-04
     # US-04: Eu, como gerente, quero saber o que deveria ter sido produzido no dia X pelo setor Y, a fim de consultar a meta ideal.
@@ -114,8 +113,7 @@ def tool_meta_producao_passada(data: str = "hoje", setor: str = "", tipo_pergunt
         print(f"[ERRO - tool_meta_producao_passada] Falha: {e}")
         return "Ocorreu um erro técnico ao calcular a meta histórica de produção."
 
-
-@dspy_tool
+@dspy_tool('PRODUCAO')
 def tool_producao_por_data(data: str, setor: str = "") -> str:
     # US-03
     # US-03: Eu, como gerente, quero saber o que foi produzido no dia X pelo setor Y, a fim de verificar a produtividade do setor Y.

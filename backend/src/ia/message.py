@@ -1,7 +1,7 @@
 import dspy
 from dspy.utils.exceptions import AdapterParseError
 from ia.config import IA_APRIMORADA 
-from ia.agentes import agente_classificador, agente_social, agente_comunicador, agente_trabalhador
+from ia.agentes import agente_classificador, agente_social, agente_comunicador, TrabalhadorEspecialista
 
 def processar_mensagem(texto_usuario: str) -> str:
     """Recebe a mensagem do Telegram e orquestra a resposta da IA."""
@@ -18,16 +18,16 @@ def processar_mensagem(texto_usuario: str) -> str:
                 
             elif "INVALIDO" in categoria:
                 return "Desculpe, Meu sistema é restrito à análise e produção do supermercado."
-                
             else:
-                resultado = agente_trabalhador(pergunta=texto_usuario)
+                especialista = TrabalhadorEspecialista(categoria)
+                resultado = especialista(pergunta=texto_usuario)
+                
                 dspy.inspect_history(n=1) 
                 
                 texto_final = agente_comunicador(
                     pergunta_original=texto_usuario, 
                     dado_bruto=resultado.dado_bruto_da_ferramenta
                 )
-                
                 return texto_final.resposta_final
 
     except AdapterParseError as erro_dspy:

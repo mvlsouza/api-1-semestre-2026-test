@@ -4,7 +4,7 @@
 - [Visão geral das camadas](#visao-geral)
 - [1. Utilitários Globais (`ia/tools/utils.py`)](#utils)
 - [2. Motor de Dados: Procedures (`procedures/`)](#procedures)
-- [3. Ferramentas da IA: Tools (`tools/`)](#tools)
+- [3. Ferramentas da IA: Tools e Registry (`tools/`)](#tools)
 - [4. Agentes de IA e Fluxo de Mensagens](#agentes)
 <!-- - [Nota de manutenção](#manutencao) -->
 
@@ -12,19 +12,23 @@
 
 ## Visão geral das camadas <a id="visao-geral"></a>
 
-O backend separa estritamente duas responsabilidades:
+O backend separa estritamente as responsabilidades, com suporte avançado a processamento de voz e roteamento dinâmico de contexto para otimizar o uso da GPU local:
 
 - **Procedures** → motor matemático e de dados, com Pandas. Não sabe nada sobre IA.
-- **Tools** → interfaces semânticas formatadas para o DSPy, que chamam as Procedures por baixo.
+- **Tools e Registry** → interfaces semânticas categorizadas que chamam as Procedures.
+- **Áudio** → conversão e transcrição de áudio via FFmpeg e Google STT, com síntese via Edge TTS.
 
 ```mermaid
 flowchart LR
-    A[Telegram] --> B[bot/telegram_bot.py]
-    B --> C[ia/message.py]
-    C --> D[Agentes DSPy]
-    D -->|ReAct escolhe uma tool| E[ia/tools/*]
-    E -->|chama| F[ia/procedures/*]
-    F -->|lê| G[(CSVs em dados/)]
+    A[Telegram] -->|Texto ou Voz| B[bot/telegram_bot.py]
+    B -->|Se Voz| AUDIO[ia/audio.py]
+    AUDIO -->|Transcrição| C
+    B -->|Se Texto| C[ia/message.py]
+    C --> D[Classificador de Intenção]
+    D -->|Categoria| E[Trabalhador Especialista]
+    E -->|Injeta apenas tools da categoria| F[ia/tools/*]
+    F -->|chama| G[ia/procedures/*]
+    G -->|lê| H[(CSVs em dados/)]
 ```
 
 ---
@@ -35,11 +39,10 @@ Funções de apoio usadas pelas *tools* antes de acionar as *procedures*.
 
 | Função | Assinatura | O que faz |
 | --- | --- | --- |
-| `dspy_tool` | `dspy_tool(func)` | Decorador que registra a função na lista `TOOLS_DISPONIVEIS`, usada pelo agente `ReAct` para saber quais ferramentas existem. |
-| `converter_data_relativa` | `converter_data_relativa(data_alvo: str) -> str` | Converte hoje/hj, amanhã/amanha, ontem, anteontem e expressões como 3 dias atrás, há 2 dias, daqui a 5 dias, em 4 dias para DD/MM/AAAA. Entrada vazia devolve ""; qualquer outro texto (inclusive uma data já formatada) é devolvido sem alteração. |
-| `normalizar_setor` | `normalizar_setor(setor: str) -> str \| None` | Corretor ortográfico e mapeador de apelidos de setor (ex: `"cozinha"` → `"Cozinha/Rotisseria"`, `"acougue"` → `"Açougue"`). Devolve `None` para entradas vazias/`"null"`/`"none"`. |
-| `dias_ate_pagamento` | `dias_ate_pagamento(valor: str) -> int` | Retorna 0 se a data for dia de pagamento, um valor negativo com os dias até o próximo pagamento, um valor positivo com os dias desde o último, ou -999 se não houver pagamento a até 19 dias. Pagamentos: dia 20 (antecipado para sexta se cair no fim de semana) e 5º dia útil (sábado conta como útil; feriados BR/SP não contam). |
-| `classificar_dia` | `classificar_dia(data: str) -> int` | Devolve `1` (dia bom) ou `0` (dia ruim), com base em: é dia de pagamento? é sexta/sábado/domingo? é feriado (via `holidays`, calendário `BR`/`SP`)? |
+| `converter_data_relativa` | `converter_data_relativa(data_alvo: str) -> str` | Converte hoje/hj, amanhã/amanha, ontem, anteontem e expressões relativas para DD/MM/AAAA. |
+| `normalizar_setor` | `normalizar_setor(setor: str) -> str \| None` | Corretor ortográfico e mapeador de apelidos de setor (ex: `"cozinha"` → `"Cozinha/Rotisseria"`). |
+| `dias_ate_pagamento` | `dias_ate_pagamento(valor: str) -> int` | Calcula dias até o pagamento (dia 20 ou 5º dia útil), considerando regras de finais de semana (sábado é útil) e feriados. |
+| `classificar_dia` | `classificar_dia(data: str) -> int` | Devolve `1` (dia bom) ou `0` (dia ruim), com base em pagamentos, fins de semana e feriados. |
 
 ---
 
@@ -52,133 +55,86 @@ import ia.procedures.procedures as procedures
 
 procedures.vendas.buscar_por_nome_produto("coxinha")
 procedures.produtos.buscar_por_setor("Padaria")
-procedures.descarte.buscar_por_data("20/09/2026")
 ```
 
-### `vendas_procedures.py` (módulo `vendas`)
-
-| Função | Assinatura | O que faz |
-| --- | --- | --- |
-| `todas_as_vendas` | `() -> pd.DataFrame` | Devolve o *dataframe* bruto com o histórico de vendas (agosto + setembro/2026 concatenados). |
-| `dataframe_vendas_similares` | `(data: str, filtro_dia: int) -> pd.DataFrame` | Filtra o histórico completo, devolvendo apenas os dias com o mesmo perfil (`filtro_dia`) da data informada. |
-| `media_vendas_produtos` | `(vendas: pd.DataFrame, setor: str = None) -> list[str]` | Agrupa por produto, calcula a média da coluna `Qtd` **por registro do CSV (cada registro é um período: Manhã, Tarde ou Noite)**, arredonda para cima e aplica **margem de segurança de 30%**: `ceil(ceil(média) × 1,3)`. Devolve algo como `['Coxinha: 8']`. Se `setor` for informado, filtra antes pelos produtos daquele setor. |
-
-### `producao_procedures.py` (módulo `producao`)
-
-| Função | Assinatura | O que faz |
-| --- | --- | --- |
-| `calcular_producao_data` | `	(data: str, setor: str = None) -> dict \| None` | Cruza **Vendas** e **Descarte** de uma data/setor específicos e soma `Produção = Vendas + Descarte` por produto. Devolve `None` se o setor não existir, ou um dicionário `{produto: {"vendas": int, "descarte": int, "producao": int}}` filtrando itens zerados. |
-
-> Outros módulos de `procedures/`:
-> - `produtos_procedures.py` — catálogo (`listar`, `listar_detalhado`, `buscar_por_nome`, `buscar_por_setor`, `buscar_por_tempo`). Usado pelas tools de catálogo e por `vendas`/`producao`.
-> - `descarte_procedures.py` — descartes de setembro/2026 (`buscar_por_data`, `buscar_por_produto`, somatórios e rankings). Usado por `producao`.
-> - `regras_procedures.py` — calendário de regras (clima, feriado, vésperas): `carregar_dados`, `obter_dia`, `obter_mes`, `obter_semana`, `filtrar`; reservado para (Sprint 2).
-> - `ingredientes_procedures.py` — **vazio**; reservado para as US de matéria-prima (Sprint 3).
+*(Mantém-se o catálogo padrão de procedures: `vendas_procedures.py`, `producao_procedures.py`, `produtos_procedures.py`, `descarte_procedures.py` e utilitários de regras).*
 
 ---
 
-## 3. Ferramentas da IA: Tools (`ia/tools/`) <a id="tools"></a>
+## 3. Ferramentas da IA: Tools e Registry (`ia/tools/`) <a id="tools"></a>
 
-Ponte entre as *Procedures* e o DSPy. As docstrings destas funções **são** a documentação que o modelo de linguagem lê para decidir qual ferramenta acionar — por isso a fonte da verdade sobre o comportamento de cada tool é o próprio código, não uma cópia aqui.
+A arquitetura utiliza o padrão *Facade/Registry* no `__init__.py` para isolar o contexto do LLM. As ferramentas são decoradas com suas categorias, permitindo que o Agente carregue apenas o estritamente necessário.
 
-### Produção & Previsão (`producao_tool.py`)
+### O Decorador Dinâmico (`__init__.py`)
+Fornece o decorador `@dspy_tool('CATEGORIA')` e a função `obter_ferramentas_por_categoria()`.
+
+### Produção & Previsão (`producao_tool.py`) - Categoria: `PRODUCAO`
 
 | Tool | Assinatura | Foco |
 | --- | --- | --- |
-| `tool_previsao_vendas_por_data` | `(data: str = "hoje", setor: str = None, tipo_pergunta: str = "quanto") -> str` | **Ação e futuro.** O que *deve* ser produzido. |
-| `tool_meta_producao_passada` | `(data: str = "hoje", setor: str = None, tipo_pergunta: str = "quanto") -> str` | **Auditoria e passado.** O que *deveria* ter sido produzido (relatório de meta para gerentes). |
-| `tool_producao_por_data` | `(data: str, setor: str = "") -> str` | **Realizado.** O que *efetivamente* foi produzido, somando vendas + descartes reais (ex: `Coxinha \| Total Produzido: 30 (Vendas: 16, Descarte: 14)`). |
+| `tool_previsao_vendas_por_data` | `(data: str = "hoje", setor: str = None, tipo_pergunta: str = "quanto") -> str` | O que *deve* ser produzido. |
+| `tool_meta_producao_passada` | `(data: str = "hoje", setor: str = None, tipo_pergunta: str = "quanto") -> str` | O que *deveria* ter sido produzido. |
+| `tool_producao_por_data` | `(data: str, setor: str = "") -> str` | O que *efetivamente* foi produzido (vendas + descartes). |
 
-
-O parâmetro `tipo_pergunta` (`"qual"/"quais"` vs. `"quanto"`) existe nas duas primeiras tools e controla se a resposta lista só os nomes dos produtos ou os nomes com as quantidades.
-
-### Catálogo de Produtos (`produtos_tools.py`)
+### Catálogo de Produtos (`produtos_tools.py`) - Categoria: `PRODUTOS`
 
 | Tool | Assinatura | Foco |
 | --- | --- | --- |
 | `listar_todos_produtos` | `() -> str` | Catálogo completo de produtos. |
 | `listar_detalhes_todos_produtos` | `() -> str` | Catálogo completo com Nome, Setor e Tempo de preparo. |
 | `informacoes_produto` | `(nome: str) -> str` | Detalhes de um produto específico. |
-| `informacoes_produto_setor` | `(setor: str) -> str` | Produtos de um setor específico. |
-| `produto_por_tempo_preparo` | `(tempo: str) -> str` | Produtos filtrados por tempo de preparo. |
 
 ---
 
 ## 4. Agentes de IA e Fluxo de Mensagens <a id="agentes"></a>
 
-### 4.1. Recepção e Orquestração
+### 4.1. Recepção e Processamento de Áudio
+- **`bot/telegram_bot.py`**: Intercepta as mensagens. Se for texto, envia para a IA. Se for voz (`voice`), aciona o `ia/audio.py` para download, conversão `.ogg` -> `.wav` via FFmpeg e transcrição (SpeechRecognition). O texto transcrito vai para a IA e a resposta final é falada pela ferramenta Edge TTS.
 
-- **`bot/telegram_bot.py > iniciar_bot(bot_key)`** — conecta à API do Telegram, responde `/start` com a apresentação da MIA, responde aos formatos não suportados (`audio`, `voice`, `photo`, `video`, `video_note`, `document`, `sticker`, `animation`, `location`, `contact`) com a mensagem fixa *"Desculpe, no momento eu não suporto esse formato enviado..."* e, para mensagens de texto, converte o texto para minúsculas, exibe "⏳ Processando sua solicitação..." e depois edita essa mensagem com a resposta da IA.
-- **`ia/message.py > processar_mensagem(texto_usuario: str) -> str`** — recebe o texto bruto, orquestra a chamada aos agentes DSPy dentro de um `try/except` e trata falhas do modelo (`AdapterParseError`) ou erros gerais de forma amigável para o usuário.
+### 4.2. Roteamento de Agentes Especialistas (`ia/agentes.py`)
 
-### 4.2. Os 4 Agentes Especialistas (`ia/agentes.py`)
+Em vez de um agente monolítico, o sistema cria agentes "sob demanda" para economizar contexto na placa de vídeo.
 
 ```mermaid
 flowchart TD
     U[Mensagem do usuário] --> C{Classificador de Intenção}
     C -->|SAUDACAO| S[Agente Social]
     C -->|INVALIDO| I[Resposta fixa de escopo]
-    C -->|TRABALHO| T[Agente Trabalhador - ReAct]
-    T -->|aciona uma tool| TOOLS[ia/tools/*]
+    C -->|PRODUCAO / PRODUTOS / VENDAS| T[Trabalhador Especialista Dinâmico]
+    T -->|Injeta apenas Tools da Categoria| TOOLS[Ferramentas Específicas]
     TOOLS --> F[Formatador de Resposta]
-    S --> OUT[Resposta final]
+    S --> OUT[Resposta Final]
     I --> OUT
     F --> OUT
 ```
 
-1. **Classificador de Intenção** (`dspy.Predict`) — "porteiro" do sistema. Classifica a mensagem em `SAUDACAO`, `TRABALHO` ou `INVALIDO`, evitando acionar ferramentas complexas sem necessidade.
-2. **Agente Social** (`dspy.Predict`) — acionado só na rota `SAUDACAO`. Responde como MIA de forma curta e simpática.
-3. **Agente Trabalhador** (`dspy.ReAct`) — o mais complexo. Recebe a lista `TOOLS_DISPONIVEIS`, raciocina sobre qual ferramenta acionar, extrai os parâmetros (data, setor, tipo de pergunta) e devolve o dado bruto (`dado_bruto_da_ferramenta`).
-4. **Formatador de Resposta** (`dspy.Predict`, variável `agente_comunicador`) — transforma o dado bruto retornado pela tool em texto natural, seguindo regras fixas de UX Writing: nunca começa com saudação, usa exclusivamente `•` para listas (nunca `*`), nunca oculta ou resume números do dado bruto (ex.: vendas e descarte) e responde só com base no dado bruto recebido.
+1. **Classificador de Intenção** (`dspy.Predict`) — Categoriza estritamente em rótulos conhecidos (`SAUDACAO`, `PRODUCAO`, `PRODUTOS`, `VENDAS`, `INVALIDO`).
+2. **Agente Social** (`dspy.Predict`) — Responde de forma curta e natural.
+3. **Trabalhador Especialista** (`dspy.Module` dinâmico) — Instancia um `dspy.ReAct` recebendo como parâmetro de inicialização a categoria escolhida, carregando **exclusivamente** as ferramentas pertinentes a esse assunto.
+4. **Formatador de Resposta** (`dspy.Predict`) — Transforma o dado bruto em texto natural, aplicando regras de UX (sem saudações iniciais, uso de bullets `•`, formatação de moeda R$).
 
-### 4.3. Fluxo de vida da mensagem — exemplo prático
+### 4.3. Fluxo de vida da mensagem — Exemplo prático
 
 ```mermaid
 sequenceDiagram
-    participant U as Usuário (Telegram)
+    participant U as Usuário
     participant Bot as telegram_bot.py
     participant Msg as message.py
     participant Cls as Classificador
-    participant Trab as Agente Trabalhador
-    participant Tool as tool_previsao_vendas_por_data
+    participant Trab as Especialista
+    participant Tool as Tool Registry
     participant Fmt as Formatador
 
-    U->>Bot: "O que devo produzir amanhã na Padaria?"
-    Bot->>Msg: processar_mensagem(texto)
+    U->>Bot: "O que devo produzir amanhã?" (Áudio/Texto)
+    Bot->>Msg: processar_mensagem(texto transcrito)
     Msg->>Cls: classifica a intenção
-    Cls-->>Msg: TRABALHO
-    Msg->>Trab: aciona o ReAct
-    Trab->>Tool: tool_previsao_vendas_por_data(data="amanhã", setor="Padaria")
-    Tool-->>Trab: dado bruto (produtos + quantidades)
+    Cls-->>Msg: Categoria: PRODUCAO
+    Msg->>Trab: TrabalhadorEspecialista("PRODUCAO")
+    Trab->>Tool: obter_ferramentas("PRODUCAO")
+    Tool-->>Trab: [tool_previsao, tool_producao...]
+    Trab->>Trab: ReAct com contexto otimizado
     Trab-->>Msg: dado_bruto_da_ferramenta
     Msg->>Fmt: formata a resposta final
     Fmt-->>Msg: resposta_final
     Msg-->>Bot: texto pronto
-    Bot-->>U: edita a mensagem "Processando..." com a resposta
-```
-
----
-
-## 5. Dados e Configuração
-
-Todos os CSVs ficam em `backend/dados/`, usam separador `;`, codificação UTF-8 (com BOM) e datas no formato `DD/MM/AAAA`. **Os dados são simulados** (setembro inclui dias posteriores à data atual).
-
-| Arquivo | Colunas | Granularidade | Período | Usado por |
-| --- | --- | --- | --- | --- |
-| `produtos_mercado.csv` | Produto; Setor; Tempo de preparo | 1 linha por produto (25 produtos, 5 setores) | — | `produtos`, `vendas`, `producao` |
-| `vendas_supermercado_agosto_2026.csv`, `vendas_supermercado_setembro_2026.csv` | Data; Período; Produto; Qtd | 1 linha por dia × período (Manhã/Tarde/Noite) × produto | 01/08 a 30/09/2026 | `vendas`, `producao` |
-| `descarte_supermercado_setembro_2026.csv` | Data; Produto; Descarte | 1 linha por dia × produto | 01/09 a 30/09/2026 | `descarte`, `producao` |
-| `regras_agosto_2026.csv`, `regras_setembro_2026.csv` | Dia; Clima; Véspera de Feriado; Feriado; Véspera de Fim de Semana; Fim de Semana | 1 linha por dia | 01/08 a 30/09/2026 | `regras` (Sprint 2) |
-| `ingredientes_produtos.csv` | Produto; Ingrediente; Quantidade | 1 linha por produto × ingrediente | — | nenhum (Sprint 3) |
-
-> ⚠️ Não há descarte para agosto: para datas de agosto, a US03 soma só as vendas como "produção".
-
-**Configuração** (`ia/config.py`): modelo `ollama/gemma4:e2b`, `api_base=http://localhost:11434`, `max_tokens=4096`, `num_ctx=8192`.
-**Inicialização** (`main.py`): carrega `backend/src/.env`, encerra com `ValueError` se `TELEGRAM_BOT_KEY` não existir, configura o DSPy e inicia o polling do Telegram.
-
-
----
-
-<!-- ## Nota de manutenção <a id="manutencao"></a>
-
-As tabelas de assinaturas acima existem só para dar uma visão geral rápida sem precisar abrir cada arquivo. **A fonte da verdade é sempre o código e a docstring de cada função** — se você adicionar um parâmetro ou mudar o nome de uma função, atualize a tabela correspondente na mesma PR (isso já está previsto no critério "Documentação Atualizada" do [DoD do projeto](../../README.md#dod)). -->
+    Bot-->>U: Responde com Texto (e Áudio Edge TTS, se aplicável)
