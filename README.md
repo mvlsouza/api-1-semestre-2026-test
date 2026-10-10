@@ -1,39 +1,39 @@
-# API 1º Semestre ADS
+# Projeto Integrador 1º Semestre - Análise e Desenvolvimento de Sistemas (FATEC)
 
 <div align="center">
   <!-- Imagem que aparece apenas no Modo Escuro -->
-  <img src="docs/img/logo-mclorem-dark.png#gh-dark-mode-only" alt="logo da McLorem Tecnologia" width="200">
+  <img src="docs/img/logo-mclorem-dark.png#gh-dark-mode-only" alt="logo da McLorem Tecnologia" width="250">
   
   <!-- Imagem que aparece apenas no Modo Claro -->
-  <img src="docs/img/logo-mclorem-light.png#gh-light-mode-only" alt="logo da McLorem Tecnologia" width="200">
+  <img src="docs/img/logo-mclorem-light.png#gh-light-mode-only" alt="logo da McLorem Tecnologia" width="250">
   
-  <h2>McLorem Tecnologia</h2>
+  <h3>MIA - Assistente de Análise de Dados</h3>
 </div>
 
+<br>
 
- <p align="center">
-  | <a href ="#desafio"> Desafio</a>  |
-  <a href ="#solucao"> Solução</a>  |   
-  <a href ="#backlog"> Backlog do Produto</a>  |
-  <a href ="#dor">DoR</a>  |
-  <a href ="#dod">DoD</a>  |
-  <a href ="#sprint"> Cronograma de Sprints</a>  | 
-  <a href ="#tecnologias">Tecnologias</a> |
-  <a href ="#manual">Manual de Instalação</a>  | 
-  <a href ="#equipe"> Equipe</a> |
+<p align="center">
+  <a href ="#desafio"> Desafio</a>  •
+  <a href ="#solucao"> Solução</a>  •   
+  <a href ="#backlog"> Backlog do Produto</a>  •
+  <a href ="#dor">DoR</a>  •
+  <a href ="#dod">DoD</a>  •
+  <a href ="#sprint"> Cronograma de Sprints</a>  • 
+  <a href ="#tecnologias">Tecnologias</a> •
+  <a href ="#manual">Manual de Instalação</a>  • 
+  <a href ="#equipe"> Equipe</a>
 </p>
 
-<br>
+---
 
 > [!IMPORTANT]
 > **Status do Projeto:** Em desenvolvimento 🛠️
 > 
-> **Relatório de Testes:** [Link](docs/processo/sprints/sprint-1/testes/Relatorio%20de%20Testes%20-%20Sprint%201.md)
+> **Relatório de Testes:** [Link](docs/processo/sprints/sprint-1/testes/Relatório%20de%20Testes%20-%20Sprint%201.md)
 > 
-> **Documentação:** [Pasta Principal](docs/cliente) · [Arquitetura](docs/cliente/tecnico/Arquitetura.md) · [Manual do Usuário](docs/cliente/usuário/Manual%20do%20Usuário.md) · [Estratégia de Branch](docs/processo/Estratégia%20de%20Branch.md) · [Padrão de Commits](docs/processo/Padrões%20de%20Commits.md)
-<!--
-> **Vídeo do Projeto:** [Youtube](https://youtu.be/)
--->
+> **Documentação:** [Pasta Principal](docs/cliente) • [Arquitetura](docs/cliente/tecnico/Arquitetura.md) • [Manual do Usuário](docs/cliente/usuário/Manual%20do%20Usuário.md) • [Estratégia de Branch](docs/processo/Estratégia%20de%20Branch.md) • [Padrão de Commits](docs/processo/Padrões%20de%20Commits.md)
+>
+> **Vídeo do Projeto:** [Youtube](https://youtu.be/AuBWGa-bZS8)
 
 ## 🎯 Desafio <a id="desafio"></a>
 
@@ -169,7 +169,7 @@ python -m venv venv
 # Se você usa Linux/Mac:
 source venv/bin/activate 
 # Se você usa Windows:
-.\venv\Scripts\activate 	 
+.\venv\Scripts\activate
 ```
 
 **3º Instale as dependências do projeto:**
@@ -207,19 +207,19 @@ Com o Bot online, abra o Telegram, inicie a conversa com a MIA e converse em lin
     <tr>
       <td align="center">
         <a href="https://github.com/hcastrosilva96">
-          <img src="https://github.com/hcastrosilva96.png" width="115px;" alt="Foto do Henrique de Castro"/><br>
-          <sub><b>Henrique de Castro</b></sub>
+          <img src="https://github.com/hcastrosilva96.png" width="115px;" alt="Foto de Henrique de Castro"/>
         </a><br>
-        Product Owner<br>
-        <a href="https://www.linkedin.com/in/henrique-castro-silva-6568a012b/">LinkedIn</a>
+        <sub><b>Henrique de Castro</b></sub><br>
+        <sub>Product Owner</sub><br>
+        <a href="https://github.com/hcastrosilva96"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/henrique-castro-silva-6568a012b/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/FelipeMoraisOC">
-          <img src="https://github.com/FelipeMoraisOC.png" width="115px;" alt="Foto do Felipe Morais"/><br>
-          <sub><b>Felipe Morais</b></sub>
+          <img src="https://github.com/FelipeMoraisOC.png" width="115px;" alt="Foto de Felipe Morais"/>
         </a><br>
-        Scrum Master<br>
-        <a href="https://www.linkedin.com/in/felipemoraisoc/">LinkedIn</a>
+        <sub><b>Felipe Morais</b></sub><br>
+        <sub>Scrum Master</sub><br>
+        <a href="https://github.com/FelipeMoraisOC"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/felipemoraisoc/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
     </tr>
   </table>
@@ -227,35 +227,35 @@ Com o Bot online, abra o Telegram, inicie a conversa com a MIA e converse em lin
     <tr>
       <td align="center">
         <a href="https://github.com/mirelacristina">
-          <img src="https://github.com/mirelacristina.png" width="100px;" alt="Foto da Mirela Cristina"/><br>
-          <sub><b>Mirela Cristina</b></sub>
+          <img src="https://github.com/mirelacristina.png" width="100px;" alt="Foto de Mirela Cristina"/>
         </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
+        <sub><b>Mirela Cristina</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/mirelacristina"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/mirela-cristina-4325723a6/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/eduardogranja">
-          <img src="https://github.com/eduardogranja.png" width="100px;" alt="Foto do Eduardo Granja"/><br>
-          <sub><b>Eduardo Granja</b></sub>
+          <img src="https://github.com/eduardogranja.png" width="100px;" alt="Foto de Eduardo Granja"/>
         </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
+        <sub><b>Eduardo Granja</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/eduardogranja"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/eduardo-granja-95273739a/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/IanVRV">
-          <img src="https://github.com/IanVRV.png" width="100px;" alt="Foto do Ian Victor"/><br>
-          <sub><b>Ian Victor</b></sub>
+          <img src="https://github.com/IanVRV.png" width="100px;" alt="Foto de Ian Victor"/>
         </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/ian-victor-ribeiro-vieira-3147121ba/">LinkedIn</a>
+        <sub><b>Ian Victor</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/IanVRV"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/ian-victor-ribeiro-vieira-3147121ba/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/mvlsouza">
-          <img src="https://github.com/mvlsouza.png" width="100px;" alt="Foto do Marcus Vinicius"/><br>
-          <sub><b>Marcus Vinicius</b></sub>
+          <img src="https://github.com/mvlsouza.png" width="100px;" alt="Foto de Marcus Vinicius"/>
         </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/mvlsouza">LinkedIn</a>
+        <sub><b>Marcus Vinicius</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/mvlsouza"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/mvlsouza/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
     </tr>
   </table>
@@ -263,27 +263,27 @@ Com o Bot online, abra o Telegram, inicie a conversa com a MIA e converse em lin
     <tr>
       <td align="center">
         <a href="https://github.com/leandrotc013-lab">
-          <img src="https://github.com/leandrotc013-lab.png" width="100px;" alt="Foto do Leandro"/><br>
-          <sub><b>Leandro Silva</b></sub>
+          <img src="https://github.com/leandrotc013-lab.png" width="100px;" alt="Foto de Leandro Silva"/>
         </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
+        <sub><b>Leandro Silva</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/leandrotc013-lab"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/leandro-silva-a54ab4a2/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/ag0ulart-dev">
-          <img src="https://github.com/ag0ulart-dev.png" width="100px;" alt="Foto do Adham Goulart"/><br>
-          <sub><b>Adham Goulart</b></sub>
+          <img src="https://github.com/ag0ulart-dev.png" width="100px;" alt="Foto de Adham Goulart"/>
         </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/adham-goulart-4a7320394/">LinkedIn</a>
+        <sub><b>Adham Goulart</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/ag0ulart-dev"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/adham-goulart-4a7320394/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/MATHEUSORTEGA">
-          <img src="https://github.com/MATHEUSORTEGA.png" width="100px;" alt="Foto do Matheus Correia"/><br>
-          <sub><b>Matheus Correia</b></sub>
+          <img src="https://github.com/MATHEUSORTEGA.png" width="100px;" alt="Foto de Matheus Correia"/>
         </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
+        <sub><b>Matheus Correia</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/MATHEUSORTEGA"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/matheus-ortega-74049943b"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
     </tr>
   </table>
@@ -291,4 +291,16 @@ Com o Bot online, abra o Telegram, inicie a conversa com a MIA e converse em lin
 
 ---
 
-*Desenvolvido com dedicação por estudantes da Fatec para o projeto de API do 1º Semestre de ADS - 2026-2.*
+# 🎓 Contexto acadêmico
+
+A **MIA**, desenvolvida pela **McLorem Tecnologia**, faz parte da **Aprendizagem por Projetos Integrados (API)** do 1º semestre do curso de **Análise e Desenvolvimento de Sistemas da Fatec São José dos Campos**.
+
+<br>
+
+<div align="center">
+
+### MIA - Assistente de Análise de Dados
+
+**McLorem Tecnologia · Fatec São José dos Campos · 2026**
+
+</div>

@@ -1,5 +1,3 @@
-# API 1º Semestre ADS
-
 # Documentação - Sprint 1
 
 <div align="center">
@@ -9,25 +7,35 @@
   <!-- Imagem que aparece apenas no Modo Claro -->
   <img src="../../../img/logo-mclorem-light.png#gh-light-mode-only" alt="logo da McLorem Tecnologia" width="200">
   
-  <h2>McLorem Tecnologia</h2>
+  <h3>MIA - Assistente de Análise de Dados</h3>
 </div>
 
+<br>
+
 <p align="center">
-  | <a href ="#desafio"> Desafio</a>  |
-  <a href ="#us"> User Stories</a>  |   
-  <a href ="#dor">DoR</a>  |
-  <a href ="#dod">DoD</a>  |
-  <a href ="#burndown">Burndown</a>  | 
-  <a href ="#equipe"> Equipe</a> |
+  <a href ="#desafio"> Desafio</a> &nbsp;&bull;&nbsp;
+  <a href ="#us"> User Stories</a> &nbsp;&bull;&nbsp;  
+  <a href ="#dor">DoR</a> &nbsp;&bull;&nbsp;
+  <a href ="#dod">DoD</a> &nbsp;&bull;&nbsp;
+  <a href ="#burndown"> Burndown</a> &nbsp;&bull;&nbsp;
+  <a href ="#equipe"> Equipe</a>
 </p>
 
-> Status da Sprint: Concluído ✅
+---
+
+> [!IMPORTANT]
+> **Status do Projeto:**  Concluído ✅
 
 ## 🏅 Desafio <a id="desafio"></a>
 
 Desenvolver a base do Assistente de Análise de Dados integrado ao Telegram, permitindo que gestores extraiam insights de negócios através de linguagem natural. O desafio central consistiu em processar dados diretamente de planilhas CSV locais (sem persistência de dados) utilizando lógica algorítmica em Python para estruturar o Planejamento de Produção. Foi necessário criar algoritmos capazes de cruzar o histórico de vendas com variáveis externas (como dias da semana e feriados) para prever com exatidão quais e quantos produtos devem ser produzidos, visando a redução de desperdícios de tempo e insumos. Toda a inteligência e processamento foram projetados para operar de forma autônoma, atendendo à restrição rigorosa de não utilizar APIs externas de terceiros.
 
 ## 📋 User Stories <a id="us"></a>
+
+| $\textsf{\textbf{Capacidade estimada da Equipe por Sprint:}}$ | $\textsf{55 Story Points}$ |
+|---|---|
+| $\color{#2e8b57}{\textsf{\textbf{Meta da Sprint:}}}$ | $\textsf{User Story de rank 1 e rank 2 (\textit{21 Story Points})}$ |
+| $\textsf{\textbf{Previsão da Sprint} (\textit{extras, sem compromisso de entrega}):}$ | $\textsf{User Story de rank 3 e rank 4 (\textit{34 Story Points})}$ |
 
 | Rank | Prioridade | User Story | Story Points | Sprint | Status |
 | :--: | :--------: | :--- | :----------: | :----: | :----: |
@@ -65,7 +73,18 @@ A avaliação detalhada de DoR e DoD, User Story por User Story, está em [`Chec
 
 ## 🏅 Sprint Burndown <a id="burndown"></a>
 
-To Be Defined! 🔜
+<div align="center">
+  <img src="../../../img/burndown-s1.png" alt="Gráfico de Burndown da Sprint 1" width="60%">
+</div>
+
+<br>
+
+> [!IMPORTANT]
+> **Retrospectiva:** O nosso Burndown Chart reflete um salto nos primeiros dias e um padrão de entregas concentradas no fim (efeito penhasco). O pico inicial ocorreu devido a um erro operacional: a Sprint foi iniciada no Jira antes que os *Story Points* fossem declarados nas *User Stories*. Já a queda brusca no final aconteceu porque os pontos foram atribuídos de forma concentrada na história principal (a "casca"). Como o sistema só "queima" os pontos quando a história inteira é movida para concluída, o esforço contínuo da equipe não foi refletido gradativamente, registrando a entrega total de uma só vez no fechamento da Sprint.
+> 
+> **Ações para a Sprint 2:** 
+> 1. Garantir que o *planning* seja finalizado e todas as estimativas sejam declaradas nos cards **antes** de dar o *start* oficial na Sprint.
+> 2. Fracionar as *User Stories* em subtarefas menores e realizar pontuações mais granulares. Isso garantirá que a conclusão de pequenas etapas movimente o fluxo com constância, refletindo o andamento diário da equipe com precisão.
 
 ## 🎓 Equipe <a id="equipe"></a>
 
@@ -74,19 +93,19 @@ To Be Defined! 🔜
     <tr>
       <td align="center">
         <a href="https://github.com/hcastrosilva96">
-          <img src="https://github.com/hcastrosilva96.png" width="115px;" alt="Foto do Henrique de Castro"/><br>
-          <sub><b>Henrique de Castro</b></sub>
+          <img src="https://github.com/hcastrosilva96.png" width="115px;" alt="Foto de Henrique de Castro"/>
         </a><br>
-        Product Owner<br>
-        <a href="https://www.linkedin.com/in/henrique-castro-silva-6568a012b/">LinkedIn</a>
+        <sub><b>Henrique de Castro</b></sub><br>
+        <sub>Product Owner</sub><br>
+        <a href="https://github.com/hcastrosilva96"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/henrique-castro-silva-6568a012b/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/FelipeMoraisOC">
-          <img src="https://github.com/FelipeMoraisOC.png" width="115px;" alt="Foto do Felipe Morais"/><br>
-          <sub><b>Felipe Morais</b></sub>
+          <img src="https://github.com/FelipeMoraisOC.png" width="115px;" alt="Foto de Felipe Morais"/>
         </a><br>
-        Scrum Master<br>
-        <a href="https://www.linkedin.com/in/felipemoraisoc/">LinkedIn</a>
+        <sub><b>Felipe Morais</b></sub><br>
+        <sub>Scrum Master</sub><br>
+        <a href="https://github.com/FelipeMoraisOC"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/felipemoraisoc/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
     </tr>
   </table>
@@ -94,35 +113,35 @@ To Be Defined! 🔜
     <tr>
       <td align="center">
         <a href="https://github.com/mirelacristina">
-          <img src="https://github.com/mirelacristina.png" width="100px;" alt="Foto da Mirela Cristina"/><br>
-          <sub><b>Mirela Cristina</b></sub>
+          <img src="https://github.com/mirelacristina.png" width="100px;" alt="Foto de Mirela Cristina"/>
         </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
+        <sub><b>Mirela Cristina</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/mirelacristina"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/mirela-cristina-4325723a6/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/eduardogranja">
-          <img src="https://github.com/eduardogranja.png" width="100px;" alt="Foto do Eduardo Granja"/><br>
-          <sub><b>Eduardo Granja</b></sub>
+          <img src="https://github.com/eduardogranja.png" width="100px;" alt="Foto de Eduardo Granja"/>
         </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
+        <sub><b>Eduardo Granja</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/eduardogranja"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/eduardo-granja-95273739a/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/IanVRV">
-          <img src="https://github.com/IanVRV.png" width="100px;" alt="Foto do Ian Victor"/><br>
-          <sub><b>Ian Victor</b></sub>
+          <img src="https://github.com/IanVRV.png" width="100px;" alt="Foto de Ian Victor"/>
         </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/ian-victor-ribeiro-vieira-3147121ba/">LinkedIn</a>
+        <sub><b>Ian Victor</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/IanVRV"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/ian-victor-ribeiro-vieira-3147121ba/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/mvlsouza">
-          <img src="https://github.com/mvlsouza.png" width="100px;" alt="Foto do Marcus Vinicius"/><br>
-          <sub><b>Marcus Vinicius</b></sub>
+          <img src="https://github.com/mvlsouza.png" width="100px;" alt="Foto de Marcus Vinicius"/>
         </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/mvlsouza">LinkedIn</a>
+        <sub><b>Marcus Vinicius</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/mvlsouza"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/mvlsouza/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
     </tr>
   </table>
@@ -130,27 +149,27 @@ To Be Defined! 🔜
     <tr>
       <td align="center">
         <a href="https://github.com/leandrotc013-lab">
-          <img src="https://github.com/leandrotc013-lab.png" width="100px;" alt="Foto do Leandro"/><br>
-          <sub><b>Leandro Silva</b></sub>
+          <img src="https://github.com/leandrotc013-lab.png" width="100px;" alt="Foto de Leandro Silva"/>
         </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
+        <sub><b>Leandro Silva</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/leandrotc013-lab"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/leandro-silva-a54ab4a2/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/ag0ulart-dev">
-          <img src="https://github.com/ag0ulart-dev.png" width="100px;" alt="Foto do Adham Goulart"/><br>
-          <sub><b>Adham Goulart</b></sub>
+          <img src="https://github.com/ag0ulart-dev.png" width="100px;" alt="Foto de Adham Goulart"/>
         </a><br>
-        Dev Team<br>
-        <a href="https://www.linkedin.com/in/adham-goulart-4a7320394/">LinkedIn</a>
+        <sub><b>Adham Goulart</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/ag0ulart-dev"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/adham-goulart-4a7320394/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
       <td align="center">
         <a href="https://github.com/MATHEUSORTEGA">
-          <img src="https://github.com/MATHEUSORTEGA.png" width="100px;" alt="Foto do Matheus Correia"/><br>
-          <sub><b>Matheus Correia</b></sub>
+          <img src="https://github.com/MATHEUSORTEGA.png" width="100px;" alt="Foto de Matheus Correia"/>
         </a><br>
-        Dev Team<br>
-        <!-- <a href="https://www.linkedin.com/in/">LinkedIn</a> -->
+        <sub><b>Matheus Correia</b></sub><br>
+        <sub>Dev Team</sub><br>
+        <a href="https://github.com/MATHEUSORTEGA"><img src="https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub"/></a> <a href="https://www.linkedin.com/in/"><img src="https://img.shields.io/badge/-LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
       </td>
     </tr>
   </table>
@@ -158,4 +177,16 @@ To Be Defined! 🔜
 
 ---
 
-*Desenvolvido com dedicação por estudantes da Fatec para o projeto de API do 1º Semestre de ADS - 2026-2.*
+# 🎓 Contexto acadêmico
+
+A **MIA**, desenvolvida pela **McLorem Tecnologia**, faz parte da **Aprendizagem por Projetos Integrados (API)** do 1º semestre do curso de **Análise e Desenvolvimento de Sistemas da Fatec São José dos Campos**.
+
+<br>
+
+<div align="center">
+
+### MIA - Assistente de Análise de Dados
+
+**McLorem Tecnologia · Fatec São José dos Campos · 2026**
+
+</div>

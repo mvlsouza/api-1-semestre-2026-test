@@ -1,5 +1,5 @@
-import telebot
 import time
+import telebot
 from ia.message import processar_mensagem
 
 def iniciar_bot(bot_key):
@@ -32,14 +32,15 @@ def iniciar_bot(bot_key):
         t0 = time.perf_counter()
         msg_temp = bot.reply_to(message, "⏳ <b><i>Processando sua solicitação...</i></b>", parse_mode='HTML')
         
-        resposta_bruta = str(processar_mensagem(message.text.lower()))
-        resposta = resposta_bruta.replace('[[ ## completed ]]', '').strip()
+        resposta = str(processar_mensagem(message.text.lower()))
         
         bot.edit_message_text(
             chat_id=message.chat.id,
             message_id=msg_temp.message_id,
-            text=resposta
+            text=resposta,
+            parse_mode='HTML'
         )
+                        
         print(f"[TEMPO TEXTO] Processamento completo: {time.perf_counter()-t0:.2f}s")
     
     @bot.message_handler(content_types=tipos_nao_suportados)
