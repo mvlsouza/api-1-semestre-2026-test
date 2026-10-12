@@ -90,25 +90,7 @@ flowchart TD
 
 %%{init: {
   'treeView': {
-    'showIcons': true,
-    'defaultIconPack': 'material-icon-theme',
-    'filenameIcons': {
-      '.env': 'dotenv',
-      '.env.example': 'dotenv',
-      'main.py': 'python',
-      'message.py': 'python',
-      'agentes.py': 'python'
-    },
-    'extensionIcons': {
-      '.py': 'python',
-      '.csv': 'csv',
-      '.md': 'markdown',
-      '.json': 'json',
-      '.yaml': 'yaml',
-      '.yml': 'yaml',
-      '.toml': 'settings',
-      '.txt': 'document'
-    }
+    'showIcons': true
   },
   'themeVariables': {
     'treeView': {
