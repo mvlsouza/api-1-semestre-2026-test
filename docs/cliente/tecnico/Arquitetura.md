@@ -86,57 +86,44 @@ flowchart TD
 
 ### Estrutura de pastas
 
-```mermaid
-
-%%{init: {
-  'themeVariables': {
-    'treeView': {
-      'labelFontSize': '16px',
-      'labelColor': '#c9d1d9',
-      'lineColor': '#484f58',
-      'descriptionColor': '#8b949e',
-      'highlightBg': 'rgba(88,166,255,0.12)',
-      'highlightStroke': '#58a6ff'
-    }
-  }
-}}%%
-treeView-beta
-    backend/
-        dados/
-            descarte/
-            regras/
-            vendas/
-            historico_ingredientes.csv
-            historico_produtos.csv
-            ingredientes.csv
-            produtos.csv
-            receitas.csv
-        src/
-            main.py :::highlight icon(logos:python)
-            paths.py icon(logos:react)
-            bot/
-                telegram_bot.py
-            ia/
-                message.py :::highlight
-                agentes.py :::highlight
-                config.py
-                procedures/
-                    descarte_procedures.py
-                    ingredientes_procedures.py
-                    produtos_procedures.py
-                    regras_procedures.py
-                    vendas_procedures.py
-                services/
-                    producao_service.py
-                tools/
-                    producao_tool.py
-                    produtos_tools.py
-                utils/
-                    datas_utils.py
-                    feriados_utils.py
-                    pagamentos_utils.py
-                    textos_utils.py
-
+```text
+backend/
+├── dados/ ## Banco de dados CSV
+│   ├── descarte/                   ## Histórico de quebras mensais
+│   ├── regras/                     ## Sazonalidade, clima e feriados
+│   ├── vendas/                     ## Volume histórico de vendas
+│   ├── historico_ingredientes.csv
+│   ├── historico_produtos.csv
+│   ├── ingredientes.csv            ## Estoque atual setorizado
+│   ├── produtos.csv                ## Catálogo e preços
+│   └── receitas.csv                ## Ficha técnica (BOM)
+└── src/
+    ├── .env                        ## Variáveis (TELEGRAM_BOT_KEY)
+    ├── .env.example
+    ├── main.py                     ## Ponto de entrada e inicialização
+    ├── paths.py                    ## Gestão dinâmica de diretórios
+    ├── bot/
+    │   └── telegram_bot.py         ## Recepção de mensagens de texto
+    └── ia/
+        ├──  message.py             ## Orquestrador e roteamento
+        ├──  agentes.py             ## Signatures e Agentes DSPy
+        ├──  config.py              ## Setup do Ollama e LLM local
+        ├──  procedures/            ## Queries diretas ao Pandas (Data Access)
+        │   ├── descarte_procedures.py
+        │   ├── ingredientes_procedures.py
+        │   ├── produtos_procedures.py
+        │   ├── regras_procedures.py
+        │   └── vendas_procedures.py
+        ├── services/               ## Lógica de negócio (Domain)
+        │   └── producao_service.py
+        ├── tools/                  ## Ferramentas expostas ao Agente
+        │   ├── producao_tool.py
+        │   └── produtos_tools.py
+        └── utils/                  ## Funções de apoio
+            ├── datas_utils.py
+            ├── feriados_utils.py
+            ├── pagamentos_utils.py
+            └── textos_utils.py
 ```
 
 ---
