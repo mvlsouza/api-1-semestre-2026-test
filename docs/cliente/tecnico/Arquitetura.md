@@ -110,13 +110,13 @@ treeView-beta
 └── 🧠 src/
     ├── 🔑 .env ## Variáveis (TELEGRAM_BOT_KEY)
     ├── 📝 .env.example
-    ├── 🚀 main.py ## Ponto de entrada e inicialização :::highlight
+    ├── 🚀 main.py :::highlight ## Ponto de entrada e inicialização
     ├── 🧭 paths.py ## Gestão dinâmica de diretórios
     ├── 💬 bot/
     │   └── 🤖 telegram_bot.py ## Recepção de mensagens de texto
     └── ✨ ia/
-        ├── 🎛️ message.py ## Orquestrador e roteamento :::highlight
-        ├── 🧩 agentes.py ## Signatures e Agentes DSPy :::highlight
+        ├── 🎛️ message.py :::highlight ## Orquestrador e roteamento
+        ├── 🧩 agentes.py :::highlight ## Signatures e Agentes DSPy
         ├── ⚙️ config.py ## Setup do Ollama e LLM local
         ├── 🗂️ procedures/ ## Queries diretas ao Pandas (Data Access)
         │   ├── 🐍 descarte_procedures.py
