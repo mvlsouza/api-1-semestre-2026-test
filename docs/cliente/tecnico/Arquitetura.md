@@ -87,53 +87,76 @@ flowchart TD
 ### Estrutura de pastas
 
 ```mermaid
+
 %%{init: {
-  'treeView': {'showIcons': false, 'rowIndent': 22, 'paddingX': 8, 'paddingY': 7, 'lineThickness': 1.5},
-  'themeVariables': {'treeView': {
-    'labelFontSize': '16px', 'labelColor': '#79818c', 'lineColor': '#8b949e',
-    'descriptionColor': '#2ea043',
-    'highlightBg': 'rgba(139,92,246,0.18)', 'highlightStroke': '#8b5cf6'
-  }}
+  'treeView': {
+    'showIcons': true,
+    'defaultIconPack': 'material-icon-theme',
+    'filenameIcons': {
+      '.env': 'dotenv',
+      '.env.example': 'dotenv',
+      'main.py': 'python',
+      'message.py': 'python',
+      'agentes.py': 'python'
+    },
+    'extensionIcons': {
+      '.py': 'python',
+      '.csv': 'csv',
+      '.md': 'markdown',
+      '.json': 'json',
+      '.yaml': 'yaml',
+      '.yml': 'yaml',
+      '.toml': 'settings',
+      '.txt': 'document'
+    }
+  },
+  'themeVariables': {
+    'treeView': {
+      'labelFontSize': '16px',
+      'labelColor': '#c9d1d9',
+      'lineColor': '#484f58',
+      'descriptionColor': '#8b949e',
+      'highlightBg': 'rgba(88,166,255,0.12)',
+      'highlightStroke': '#58a6ff'
+    }
+  }
 }}%%
 treeView-beta
-📦 backend/
-├── 🗄️ dados/ ## Banco de dados CSV (Pandas)
-│   ├── 💾 backup/
-│   ├── 🗑️ descarte/ ## Histórico de quebras mensais
-│   ├── 📅 regras/ ## Sazonalidade, clima e feriados
-│   ├── 🛒 vendas/ ## Volume histórico de vendas
-│   ├── 📈 historico_ingredientes.csv
-│   ├── 📈 historico_produtos.csv
-│   ├── 🧂 ingredientes.csv ## Estoque atual setorizado
-│   ├── 🏷️ produtos.csv ## Catálogo e preços
-│   └── 📋 receitas.csv ## Ficha técnica (BOM)
-└── 🧠 src/
-    ├── 🔑 .env ## Variáveis (TELEGRAM_BOT_KEY)
-    ├── 📝 .env.example
-    ├── 🚀 main.py :::highlight ## Ponto de entrada e inicialização
-    ├── 🧭 paths.py ## Gestão dinâmica de diretórios
-    ├── 💬 bot/
-    │   └── 🤖 telegram_bot.py ## Recepção de mensagens de texto
-    └── ✨ ia/
-        ├── 🎛️ message.py :::highlight ## Orquestrador e roteamento
-        ├── 🧩 agentes.py :::highlight ## Signatures e Agentes DSPy
-        ├── ⚙️ config.py ## Setup do Ollama e LLM local
-        ├── 🗂️ procedures/ ## Queries diretas ao Pandas (Data Access)
-        │   ├── 🐍 descarte_procedures.py
-        │   ├── 🐍 ingredientes_procedures.py
-        │   ├── 🐍 produtos_procedures.py
-        │   ├── 🐍 regras_procedures.py
-        │   └── 🐍 vendas_procedures.py
-        ├── ⚖️ services/ ## Lógica de negócio (Domain)
-        │   └── 🐍 producao_service.py
-        ├── 🧰 tools/ ## Ferramentas expostas ao Agente
-        │   ├── 🐍 producao_tool.py
-        │   └── 🐍 produtos_tools.py
-        └── 🔧 utils/ ## Funções de apoio
-            ├── 🐍 datas_utils.py
-            ├── 🐍 feriados_utils.py
-            ├── 🐍 pagamentos_utils.py
-            └── 🐍 textos_utils.py
+    backend/
+        dados/
+            descarte/
+            regras/
+            vendas/
+            historico_ingredientes.csv
+            historico_produtos.csv
+            ingredientes.csv
+            produtos.csv
+            receitas.csv
+        src/
+            main.py :::highlight icon(logos:python)
+            paths.py icon(logos:react)
+            bot/
+                telegram_bot.py
+            ia/
+                message.py :::highlight
+                agentes.py :::highlight
+                config.py
+                procedures/
+                    descarte_procedures.py
+                    ingredientes_procedures.py
+                    produtos_procedures.py
+                    regras_procedures.py
+                    vendas_procedures.py
+                services/
+                    producao_service.py
+                tools/
+                    producao_tool.py
+                    produtos_tools.py
+                utils/
+                    datas_utils.py
+                    feriados_utils.py
+                    pagamentos_utils.py
+                    textos_utils.py
 
 ```
 
