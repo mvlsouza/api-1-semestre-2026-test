@@ -89,9 +89,6 @@ flowchart TD
 ```mermaid
 
 %%{init: {
-  'treeView': {
-    'showIcons': true
-  },
   'themeVariables': {
     'treeView': {
       'labelFontSize': '16px',
