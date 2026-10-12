@@ -86,90 +86,55 @@ flowchart TD
 
 ### Estrutura de pastas
 
-```text
-backend/
-├── dados/                      # banco de dados
-│   ├── produtos.csv
-│   ├── vendas/vendas_*.csv
-│   ├── descarte/descarte_*.csv
-│   └── regras/regras_*.csv
-└── src/
-    ├── main.py                 # inicialização: valida o .env, checa o Ollama, aquece o modelo e sobe o bot
-    ├── paths.py                # caminhos do .env e das pastas de dados
-    ├── bot/
-    │   └── telegram_bot.py     # recepção das mensagens do Telegram
-    └── ia/
-        ├── config.py           # modelo de linguagem (DSPy + Ollama)
-        ├── message.py          # orquestrador: processar_mensagem()
-        ├── agentes.py          # Signatures, agentes e AgenteAnalista
-        ├── tools/              # ferramentas + registry por categoria
-        ├── services/           # regras de negócio
-        ├── procedures/         # acesso aos dados
-        └── utils/              # funções de apoio
-```
-
 ```mermaid
----
-config:
-  treeView:
-    showIcons: true
-    defaultIconPack: vscode-icons
-    folderIcon: default-folder
-    extensionIcons:
-      .csv: file-type-excel
-      .py: file-type-python
-      .md: file-type-markdown
-    filenameIcons:
-      .env: file-type-env
-      .env.example: file-type-env
-themeVariables:
-  treeView:
-    labelFontSize: '15px'
-    labelColor: '#1565c0'
-    lineColor: '#90caf9'
----
+%%{init: {
+  'treeView': {'showIcons': false, 'rowIndent': 22, 'paddingX': 8, 'paddingY': 7, 'lineThickness': 1.5},
+  'themeVariables': {'treeView': {
+    'labelFontSize': '16px', 'labelColor': '#79818c', 'lineColor': '#8b949e',
+    'descriptionColor': '#2ea043',
+    'highlightBg': 'rgba(139,92,246,0.18)', 'highlightStroke': '#8b5cf6'
+  }}
+}}%%
 treeView-beta
-backend/
-├── dados/
-│   ├── backup/
-│   ├── descarte/
-│   ├── regras/
-│   ├── vendas/
-│   ├── historico_ingredientes.csv
-│   ├── historico_produtos.csv
-│   ├── ingredientes.csv
-│   ├── produtos.csv
-│   └── receitas.csv
-└── src/
-    ├── .env
-    ├── .env.example
-    ├── main.py
-    ├── paths.py
-    ├── test.py
-    ├── bot/
-    │   ├── telegram_bot.py
-    │   └── telegram_bot_audio.py
-    └── ia/
-        ├── agentes.py
-        ├── audio.py
-        ├── config.py
-        ├── message.py
-        ├── procedures/
-        │   ├── descarte_procedures.py
-        │   ├── ingredientes_procedures.py
-        │   ├── produtos_procedures.py
-        │   ├── regras_procedures.py
-        │   └── vendas_procedures.py
-        ├── services/
-        │   └── producao_service.py
-        ├── tools/
-        │   ├── producao_tool.py
-        │   └── produtos_tools.py
-        └── utils/
-            ├── datas_utils.py
-            ├── feriados_utils.py
-            ├── pagamentos_utils.py
-            └── textos_utils.py
+📦 backend/
+├── 🗄️ dados/ ## Banco de dados CSV (Pandas)
+│   ├── 💾 backup/
+│   ├── 🗑️ descarte/ ## Histórico de quebras mensais
+│   ├── 📅 regras/ ## Sazonalidade, clima e feriados
+│   ├── 🛒 vendas/ ## Volume histórico de vendas
+│   ├── 📈 historico_ingredientes.csv
+│   ├── 📈 historico_produtos.csv
+│   ├── 🧂 ingredientes.csv ## Estoque atual setorizado
+│   ├── 🏷️ produtos.csv ## Catálogo e preços
+│   └── 📋 receitas.csv ## Ficha técnica (BOM)
+└── 🧠 src/
+    ├── 🔑 .env ## Variáveis (TELEGRAM_BOT_KEY)
+    ├── 📝 .env.example
+    ├── 🚀 main.py ## Ponto de entrada e inicialização :::highlight
+    ├── 🧭 paths.py ## Gestão dinâmica de diretórios
+    ├── 💬 bot/
+    │   └── 🤖 telegram_bot.py ## Recepção de mensagens de texto
+    └── ✨ ia/
+        ├── 🎛️ message.py ## Orquestrador e roteamento :::highlight
+        ├── 🧩 agentes.py ## Signatures e Agentes DSPy :::highlight
+        ├── ⚙️ config.py ## Setup do Ollama e LLM local
+        ├── 🗂️ procedures/ ## Queries diretas ao Pandas (Data Access)
+        │   ├── 🐍 descarte_procedures.py
+        │   ├── 🐍 ingredientes_procedures.py
+        │   ├── 🐍 produtos_procedures.py
+        │   ├── 🐍 regras_procedures.py
+        │   └── 🐍 vendas_procedures.py
+        ├── ⚖️ services/ ## Lógica de negócio (Domain)
+        │   └── 🐍 producao_service.py
+        ├── 🧰 tools/ ## Ferramentas expostas ao Agente
+        │   ├── 🐍 producao_tool.py
+        │   └── 🐍 produtos_tools.py
+        └── 🔧 utils/ ## Funções de apoio
+            ├── 🐍 datas_utils.py
+            ├── 🐍 feriados_utils.py
+            ├── 🐍 pagamentos_utils.py
+            └── 🐍 textos_utils.py
+
 ```
 
 ---
