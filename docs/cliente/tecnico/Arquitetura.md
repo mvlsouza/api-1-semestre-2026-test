@@ -86,26 +86,66 @@ flowchart TD
 
 ### Estrutura de pastas
 
-```text
+```mermaid
+---
+config:
+  treeView:
+    showIcons: true
+    defaultIconPack: material-icon-theme
+    filenameIcons:
+      Dockerfile: docker
+    extensionIcons:
+      .csv: excel
+      .py: python
+      .txt: none
+themeVariables:
+  treeView:
+    labelFontSize: '18px'
+    labelColor: '#1565c0'
+    lineColor: '#90cAf9'
+---
+treeView-beta
 backend/
-├── dados/                      # banco de dados
-│   ├── produtos.csv
-│   ├── vendas/vendas_*.csv
-│   ├── descarte/descarte_*.csv
-│   └── regras/regras_*.csv
+├── dados/                              ## Banco de dados CSV (Pandas)
+│   ├── backup/
+│   ├── descarte/                       ## Histórico de quebras mensais
+│   ├── regras/                         ## Sazonalidade, clima e feriados
+│   ├── vendas/                         ## Volume histórico de vendas
+│   ├── historico_ingredientes.csv
+│   ├── historico_produtos.csv
+│   ├── ingredientes.csv                ## Estoque atual setorizado
+│   ├── produtos.csv                    ## Catálogo e preços
+│   └── receitas.csv                    ## Ficha técnica (BOM)
 └── src/
-    ├── main.py                 # inicialização: valida o .env, checa o Ollama, aquece o modelo e sobe o bot
-    ├── paths.py                # caminhos do .env e das pastas de dados
+    ├── .env                            ## Variáveis (TELEGRAM_BOT_KEY)
+    ├── .env.example
+    ├── main.py                         ## Ponto de entrada e inicialização
+    ├── paths.py                        ## Gestão dinâmica de diretórios
+    ├── test.py                         ## Ambiente isolado de testes
     ├── bot/
-    │   └── telegram_bot.py     # recepção das mensagens do Telegram
+    │   ├── telegram_bot.py             ## Recepção de mensagens de texto
+    │   └── telegram_bot_audio.py       ## Processamento de notas de voz
     └── ia/
-        ├── config.py           # modelo de linguagem (DSPy + Ollama)
-        ├── message.py          # orquestrador: processar_mensagem()
-        ├── agentes.py          # Signatures, agentes e AgenteAnalista
-        ├── tools/              # ferramentas + registry por categoria
-        ├── services/           # regras de negócio
-        ├── procedures/         # acesso aos dados
-        └── utils/              # funções de apoio
+        ├── agentes.py                  ## Signatures e Agentes DSPy
+        ├── audio.py                    ## Transcrição de áudio
+        ├── config.py                   ## Setup do Ollama e LLM local
+        ├── message.py                  ## Orquestrador e roteamento
+        ├── procedures/                 ## Queries diretas ao Pandas (Data Access)
+        │   ├── descarte_procedures.py
+        │   ├── ingredientes_procedures.py
+        │   ├── produtos_procedures.py
+        │   ├── regras_procedures.py
+        │   └── vendas_procedures.py
+        ├── services/                   ## Lógica de negócio (Domain)
+        │   └── producao_service.py
+        ├── tools/                      ## Ferramentas expostas ao Agente
+        │   ├── producao_tool.py
+        │   └── produtos_tools.py
+        └── utils/                      ## Funções de apoio
+            ├── datas_utils.py
+            ├── feriados_utils.py
+            ├── pagamentos_utils.py
+            └── textos_utils.py
 ```
 
 ---
